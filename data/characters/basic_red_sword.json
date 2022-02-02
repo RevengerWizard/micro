@@ -1,0 +1,308 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 20,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 60,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 0,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 20,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 60,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 36,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 18,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 20,
+                "y": 36,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 36,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 60,
+                "y": 36,
+                "w": 20,
+                "h": 18,
+                "duration": 200,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 36,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 54,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 20,
+                "y": 54,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 54,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 60,
+                "y": 54,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 54,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 72,
+                "w": 20,
+                "h": 18,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        }
+    ],
+    "meta": {
+        "name": "basic_red_sword",
+        "image": "assets/basic_red_sword.png",
+        "size": {
+            "w": 100,
+            "h": 90
+        },
+        "frameTags": [
+            {
+                "name": "idle",
+                "from": 1,
+                "to": 4,
+                "direction": "forward"
+            },
+            {
+                "name": "run",
+                "from": 5,
+                "to": 12,
+                "direction": "forward"
+            },
+            {
+                "name": "attack",
+                "from": 13,
+                "to": 22,
+                "direction": "forward"
+            }
+        ]
+    }
+}

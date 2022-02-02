@@ -1,0 +1,80 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 51,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 51,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 51,
+                "y": 0,
+                "w": 51,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 20,
+                "w": 51,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 51,
+                "y": 20,
+                "w": 51,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        }
+    ],
+    "meta": {
+        "name": "caveman",
+        "image": "assets/caveman.png",
+        "size": {
+            "w": 102,
+            "h": 40
+        },
+        "frameTags": [
+            {
+                "name": "idle",
+                "from": 1,
+                "to": 4,
+                "direction": "forward"
+            }
+        ]
+    }
+}

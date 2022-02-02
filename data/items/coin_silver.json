@@ -1,0 +1,64 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 11,
+                "h": 12,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0
+            }
+        },
+        {
+            "frame": {
+                "x": 11,
+                "y": 0,
+                "w": 11,
+                "h": 12,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 12,
+                "w": 11,
+                "h": 12,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0
+            }
+        },
+        {
+            "frame": {
+                "x": 11,
+                "y": 12,
+                "w": 11,
+                "h": 12,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0
+            }
+        }
+    ],
+    "meta": {
+        "name": "coin_silver",
+        "image": "assets/coin_silver.png",
+        "size": {
+            "w": 22,
+            "h": 24
+        },
+        "frameTags": [
+            {
+                "name": "idle",
+                "from": 0,
+                "to": 3,
+                "direction": "forward"
+            }
+        ]
+    }
+}

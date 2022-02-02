@@ -1,0 +1,296 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 16,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 48,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 16,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 16,
+                "y": 16,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 16,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 48,
+                "y": 16,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 32,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 16,
+                "y": 32,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 16,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 32,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 16,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 50,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 48,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 50,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 48,
+                "y": 32,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 48,
+                "w": 16,
+                "h": 16,
+                "duration": 150,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 16,
+                "y": 48,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 48,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 32,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 48,
+                "y": 48,
+                "w": 16,
+                "h": 16,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16,
+                "duration": 750,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        }
+    ],
+    "meta": {
+        "name": "girl",
+        "image": "assets/girl.png",
+        "size": {
+            "w": 64,
+            "h": 64
+        },
+        "frameTags": [
+            {
+                "name": "idle",
+                "from": 1,
+                "to": 4,
+                "direction": "forward"
+            },
+            {
+                "name": "run",
+                "from": 5,
+                "to": 12,
+                "direction": "forward"
+            },
+            {
+                "name": "jump",
+                "from": 13,
+                "to": 21,
+                "direction": "forward"
+            }
+        ]
+    }
+}

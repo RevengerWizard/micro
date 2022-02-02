@@ -1,0 +1,134 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 0,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 0,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 20,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 20,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 80,
+                "y": 20,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 0,
+                "y": 40,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        },
+        {
+            "frame": {
+                "x": 40,
+                "y": 40,
+                "w": 40,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        }
+    ],
+    "meta": {
+        "name": "demon",
+        "image": "assets/demon.png",
+        "size": {
+            "w": 120,
+            "h": 60
+        },
+        "frameTags": [
+            {
+                "name": "idle",
+                "from": 1,
+                "to": 4,
+                "direction": "forward"
+            },
+            {
+                "name": "run",
+                "from": 5,
+                "to": 8,
+                "direction": "forward"
+            }
+        ]
+    }
+}

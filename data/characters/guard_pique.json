@@ -1,0 +1,25 @@
+{
+    "frames": [
+        {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 20,
+                "duration": 100,
+                "ox": 0,
+                "oy": 0,
+                "event": false
+            }
+        }
+    ],
+    "meta": {
+        "name": "guard_pique",
+        "image": "assets/guard_pique.png",
+        "size": {
+            "w": 20,
+            "h": 20
+        },
+        "frameTags": []
+    }
+}
