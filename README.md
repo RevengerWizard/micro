@@ -1,3 +1,3 @@
 # micrö
 
-A small games made with LÖVE
+A small game made with LÖVE
