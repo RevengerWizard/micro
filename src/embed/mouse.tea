@@ -1,0 +1,67 @@
+const position = { x = 0, y = 0 }
+const buttonsDown = {}
+const buttonsPressed = {}
+
+function micro.mouse._event(e)
+{
+    switch(e.type)
+    {
+        case 'mousemove':
+        {
+            position.x = e.x
+            position.y = e.y
+        }
+        case 'mousedown':
+        {
+            buttonsDown[e.button] = true
+            buttonsPressed[e.button] = true
+        }
+        case 'mouseup':
+        {
+            buttonsDown[e.button] = false
+        }
+    }
+}
+
+function micro.mouse.reset()
+{
+    for(const k, v in buttonsPressed)
+    {
+        buttonsPressed[k] = nil
+    }
+}
+
+function micro.mouse.isDown(...button)
+{
+    for(const x in button)
+    {
+        if(buttonsDown.get(x))
+            return true
+    }
+    return false
+}
+
+function micro.mouse.wasPressed(...button)
+{
+    for(const x in button)
+    {
+        if(buttonsPressed.get(x))
+            return true
+    }
+    return false
+}
+
+function micro.mouse.getPosition()
+{
+    return [position.x, position.y]
+}
+
+function micro.mouse.getX()
+{
+    return position.x
+}
+
+function micro.mouse.getY()
+{
+    return position.y
+}

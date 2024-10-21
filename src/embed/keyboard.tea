@@ -1,0 +1,40 @@
+const keysDown = {}
+const keysPressed = {}
+
+function micro.keyboard._event(e)
+{
+    if(e.type == "keydown")
+    {
+        keysDown[e.key] = true
+        keysPressed[e.key] = true
+    }
+    else if(e.type == "keyup")
+    {
+        keysDown[e.key] = false
+    }
+}
+
+function micro.keyboard.reset()
+{
+    keysPressed.clear()
+}
+
+function micro.keyboard.isDown(...keys)
+{
+    for(const k in keys)
+    {
+        if(keysDown.get(k))
+            return true
+    }
+    return false
+}
+
+function micro.keyboard.wasPressed(...keys)
+{
+    for(const k in keys)
+    {
+        if(keysPressed.get(k))
+            return true
+    }
+    return false
+}

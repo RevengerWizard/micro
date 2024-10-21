@@ -1,0 +1,78 @@
+const init = micro.gfx.init
+
+micro.gfx.init = function(w, y)
+{
+    // init
+    const screen = init(w, y)
+    micro.gfx.screen = screen
+}
+
+const defaultFont = micro.Font.fromEmbedded()
+
+const fontTexCache = {}
+
+var font = defaultFont
+
+function micro.gfx.setFont(newFont=defaultFont)
+{
+    font = newFont
+}
+
+function weakkey(map, key) 
+{
+    if(key not in map) 
+    {
+        map[key] = {}
+    }
+    return map[key]
+}
+
+function micro.gfx.print(text, x=0, y=0, r=0, sx=nil, sy=nil, ox=0, oy=0)
+{
+    sx = sx or 1
+    sy = sy or sx
+    if(text.find('\n') != -1)
+    {
+        // Multi line
+        const height = font.getHeight()
+        for(const line in text.split('\n'))
+        {
+            micro.gfx.print(line, x, y, r, sx, sy, ox, oy)
+            y = y + height
+        }
+    }
+    else
+    {
+        // Single line
+        var tex = weakkey(fontTexCache, font).get(text)
+        if(not tex)
+        {
+            tex = font.render(text)
+            weakkey(fontTexCache, font).set(text, tex)
+        }
+        micro.gfx.draw(tex, x, y, nil, r, sx, sy, ox, oy)
+    }
+}
+
+micro.gfx._clearColor = nil
+
+// Override micro.gfx.clear() to use _clearColor if available
+const clear = micro.gfx.clear
+function micro.gfx.clear(r=255, g=255, b=255)
+{
+    var c = micro.gfx._clearColor
+    var rr, gg, bb
+    if(typeof(c) == 'list')
+    {
+        const len = c.len
+        rr = c.len > 0 and c[0]
+        gg = c.len > 1 and c[1]
+        bb = c.len > 2 and c[2]
+    }
+    clear(rr, gg, bb, 255)
+}
+
+function micro.gfx.setClearColor(r=255, g=255, b=255)
+{
+    micro.gfx._clearColor = [r, g, b, 255]
+}

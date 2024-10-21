@@ -1,0 +1,109 @@
+const handlers = {
+    keydown = function(e) {
+        if(hasattr(micro.debug, "_event")) micro.debug._event(e)
+        if(hasattr(micro.keyboard, "_event")) micro.keyboard._event(e)
+        if(hasattr(micro, "keydown")) micro.keydown(e.key)
+    },
+    keyup = function(e) {
+        if(hasattr(micro.keyboard, "_event")) micro.keyboard._event(e)
+        if(hasattr(micro, "keyup")) micro.keyup(e.key)
+    },
+    mousemove = function(e) {
+        if(hasattr(micro.mouse, "_event")) micro.mouse._event(e)
+        if(hasattr(micro, "mousemove")) micro.mousemove(e.x, e.y)
+    },
+    mousedown = function(e) {
+        if(hasattr(micro.mouse, "_event")) micro.mouse._event(e)
+        if(hasattr(micro, "mousedown")) micro.mousedown(e.button)
+    },
+    mouseup = function(e) {
+        if(hasattr(micro.mouse, "_event")) micro.mouse._event(e)
+        if(hasattr(micro, "mouseup")) micro.mouseup(e.button)
+    },
+    textinput = function(e) {
+        if(hasattr(micro.debug, "_event")) micro.debug._event(e)
+        if(hasattr(micro, "textinput")) micro.textinput(e.text)
+    },
+    quit = function(e) {
+        if(hasattr(micro, "quit")) micro.quit()
+    }
+}
+
+const quit = micro.event.quit
+function micro.event.quit()
+{
+    quit()
+    handlers["quit"](nil)
+}
+
+function run()
+{
+    micro.event.pump()
+    for(const e in micro.event.poll())
+    {
+        if(e.get("type") and handlers.get(e.type))
+            handlers[e.type](e)
+    }
+    if(hasattr(micro.timer, "step")) micro.timer.step()
+    if(hasattr(micro, "update"))
+    {
+        if(hasattr(micro.timer, "getDelta"))
+            micro.update(micro.timer.getDelta())
+    }
+    if(hasattr(micro.gfx, "clear")) micro.gfx.clear()
+    if(hasattr(micro, "draw")) micro.draw()
+    if(hasattr(micro.debug, "draw")) micro.debug.draw()
+    if(hasattr(micro.keyboard, "reset")) micro.keyboard.reset()
+    if(hasattr(micro.mouse, "reset")) micro.mouse.reset()
+}
+
+function micro.run()
+{
+    run()
+}
+
+import sys, os
+
+if(sys.argv.len > 1)
+{
+    for(var i = 1; i < sys.argv.len; i++)
+    {
+        micro.filesystem.mount(sys.argv[i])
+    }
+}
+else
+{
+    // Try to mount default packages (pak0, pak1, etc.)
+    const dirs = [micro.system.info("exedir")]
+    if(os.name == "osx")
+    {
+        dirs.add(dirs, micro.system.info("exedir") + "/../Resources")
+    }
+    for(const dir in dirs)
+    {
+        var idx = 0
+        while(micro.filesystem.mount(dir + "/pak" + tostring(idx)))
+        {
+            idx = idx + 1
+        }
+        if(idx != 0) break
+    }
+}
+
+var c = {}
+if(micro.filesystem.exists("conf.tea"))
+{
+
+}
+
+micro.gfx.init(200, 200)
+micro.gfx.setClearColor(0, 0, 0)
+micro.audio.init()
+
+if(micro.filesystem.exists("main.tea"))
+{
+    // Load project file
+    import "main"
+}
+
+if(hasattr(micro, "load")) micro.load()

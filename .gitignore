@@ -1,0 +1,6 @@
+.vscode
+*.dll
+*.so
+*.exe
+*.o
+src/embed/*.h
