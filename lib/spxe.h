@@ -25,4 +25,6 @@ void spxeMousePos(int* xptr, int* yptr);
 
 struct GLFWwindow* spxeGetWindow();
 
+void spxeSetFullscreen(int enable);
+
 #endif /* SPXE_APPLICATION */

@@ -106,44 +106,6 @@ static void spxeWindow(GLFWwindow* window, int width, int height)
     spxeFrame();
 }
 
-/* window and screen size getters */
-
-void spxeWindowSize(int* width, int* height)
-{
-    *width = spxe.winres.width;
-    *height = spxe.winres.height;
-}
-
-void spxeScreenSize(int* width, int* height)
-{
-    *width = spxe.scrres.width;
-    *height = spxe.scrres.height;
-}
-
-/* mouse input */
-
-void spxeMousePos(int* x, int* y)
-{
-    double dx, dy;
-    float width, height, hwidth, hheight;
-    
-    glfwGetCursorPos(spxe.window, &dx, &dy);
-    width = (float)spxe.scrres.width;
-    height = (float)spxe.scrres.height;
-    hwidth = width * 0.5;
-    hheight = height * 0.5;
-
-    dx = dx * (width / (float)spxe.winres.width);
-    dy = dy * (height / (float)spxe.winres.height);
-    *x = (int)((dx - hwidth) / spxe.ratio.width + hwidth);
-    *y = (int)((dy - hheight) / spxe.ratio.height + hheight);
-}
-
-GLFWwindow* spxeGetWindow()
-{
-    return spxe.window;
-}
-
 /* spxe core */
 
 Px* spxeStart(          
@@ -162,7 +124,8 @@ Px* spxeStart(
     };
 
     /* init glfw */
-    if (!glfwInit()) {
+    if(!glfwInit())
+    {
         fprintf(stderr, "spxe failed to initiate glfw.\n");
         return NULL;
     }
@@ -179,10 +142,14 @@ Px* spxeStart(
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 #endif
 
+    glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
+    glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
+
     gleqInit();
 
     window = glfwCreateWindow(winwidth, winheight, title, NULL, NULL);
-    if (!window) {
+    if(!window)
+    {
         fprintf(stderr, "spxe failed to open glfw window.\n");
         glfwTerminate();
         return NULL;
@@ -193,14 +160,14 @@ Px* spxeStart(
 
     glfwSetWindowSizeLimits(window, scrwidth, scrheight, GLFW_DONT_CARE, GLFW_DONT_CARE);
     glfwSetWindowSizeCallback(window, spxeWindow);
-    //glfwSetInputMode(window, GLFW_MOD_CAPS_LOCK, GLFW_TRUE);
 
     gleqTrackWindow(window);
 
     /* OpenGL context and settings */
 #ifndef __APPLE__
     glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
+    if(glewInit() != GLEW_OK)
+    {
         fprintf(stderr, "spxe failed to initiate glew.\n");
         return NULL;
     }
@@ -213,7 +180,8 @@ Px* spxeStart(
     
     /* allocate pixel framebuffer */
     pixbuf = (Px*)calloc(scrsize, sizeof(Px));
-    if (!pixbuf) {
+    if(!pixbuf)
+    {
         fprintf(stderr, "spxe failed to allocate pixel framebuffer.\n");
         return NULL;
     }
@@ -310,4 +278,83 @@ int spxeEnd(Px* pixbuf)
     }
 
     return EXIT_SUCCESS;
+}
+
+/* window and screen size getters */
+
+void spxeWindowSize(int* width, int* height)
+{
+    *width = spxe.winres.width;
+    *height = spxe.winres.height;
+}
+
+void spxeScreenSize(int* width, int* height)
+{
+    *width = spxe.scrres.width;
+    *height = spxe.scrres.height;
+}
+
+/* mouse input */
+
+void spxeMousePos(int* x, int* y)
+{
+    double dx, dy;
+    float width, height, hwidth, hheight;
+    
+    glfwGetCursorPos(spxe.window, &dx, &dy);
+    width = (float)spxe.scrres.width;
+    height = (float)spxe.scrres.height;
+    hwidth = width * 0.5;
+    hheight = height * 0.5;
+
+    dx = dx * (width / (float)spxe.winres.width);
+    dy = dy * (height / (float)spxe.winres.height);
+    *x = (int)((dx - hwidth) / spxe.ratio.width + hwidth);
+    *y = (int)((dy - hheight) / spxe.ratio.height + hheight);
+}
+
+GLFWwindow* spxeGetWindow()
+{
+    return spxe.window;
+}
+
+static GLFWmonitor* previous_monitor = NULL;
+static int previous_x = 0, previous_y = 0;
+static int previous_width = 0, previous_height = 0;
+
+void spxeSetFullscreen(int enable)
+{
+    if(enable && !previous_monitor)
+    {
+        // Store current window position and size
+        glfwGetWindowPos(spxe.window, &previous_x, &previous_y);
+        glfwGetWindowSize(spxe.window, &previous_width, &previous_height);
+        
+        // Get the primary monitor
+        GLFWmonitor* primary = glfwGetPrimaryMonitor();
+        if(!primary) return;
+        
+        // Get the monitor's video mode
+        const GLFWvidmode* mode = glfwGetVideoMode(primary);
+        if(!mode) return;
+        
+        // Store the monitor for later use when exiting fullscreen
+        previous_monitor = primary;
+        
+        // Set fullscreen mode
+        glfwSetWindowMonitor(spxe.window, primary, 0, 0, 
+                           mode->width, mode->height, 
+                           mode->refreshRate);   
+    }
+    else if(!enable && previous_monitor)
+    {
+        // Restore the window to its previous position and size
+        glfwSetWindowMonitor(spxe.window, NULL,
+                            previous_x, previous_y,
+                            previous_width, previous_height,
+                            0);
+                            
+        // Clear the stored monitor
+        previous_monitor = NULL;
+    }
 }
