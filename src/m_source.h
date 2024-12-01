@@ -50,7 +50,7 @@ typedef struct Source
         /* .ogg */
         struct
         {
-            stb_vorbis *oggStream;
+            stb_vorbis* oggStream;
         };
     };
 } Source;

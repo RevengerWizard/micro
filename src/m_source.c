@@ -529,7 +529,7 @@ static void source_fromData(tea_State* T)
     self->dataRef = teax_ref(T, TEA_REGISTRY_INDEX);
     /* Detect format and set appropriate event handler */
     /* Is .wav? */
-    if(data->len > 12 && !memcmp(((char *)data->data) + 8, "WAVE", 4))
+    if(data->len > 12 && !memcmp(((char*)data->data) + 8, "WAVE", 4))
     {
         self->onEvent = onEventWav;
         goto init;
