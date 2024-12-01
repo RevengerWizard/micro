@@ -32,20 +32,20 @@ function newIndicator(fn, min=0, max=0)
 function micro.debug._event(e)
 {
     // Handle console's keyboard input
-    if(e.type == "keydown" and enabled and focused)
+    if e.type == "keydown" and enabled and focused
     {
-        if(e.key == "backspace")
+        if e.key == "backspace"
         {
             inputbuf = inputbuf[0:-1]
         }
-        else if(e.key == "enter")
+        else if e.key == "enter"
         {
             const fn = loadstring(inputbuf, "=<input>")
             fn()
             inputbuf = ""
         }
     }
-    else if(e.type == "textinput" and enabled and focused)
+    else if e.type == "textinput" and enabled and focused
     {
         inputbuf += e.text
     }
@@ -54,16 +54,16 @@ function micro.debug._event(e)
 function micro.debug.draw()
 {
     // Not enabled? Don't draw
-    if(not enabled) { return }
+    if not enabled { return }
     // Draw indicators
-    for(const v in indicators)
+    for const v in indicators
     {
         v()
     }
 
     // Draw console input text
     var w = 300
-    if(focused)
+    if focused
     {
         var h = font.getHeight()
         var y = micro.gfx.screen.getHeight() - 8 - h
@@ -93,7 +93,7 @@ function init()
 function micro.debug.setVisible(x)
 {
     enabled = x and true or false
-    if(enabled and not inited)
+    if enabled and not inited
     {
         init()
     }
@@ -118,15 +118,15 @@ function micro.debug.addIndicator(fn, min=0, max=0)
 {
     // Error check
     const str, num = fn()
-    if(typeof(str) != "string" or typeof(num) != "number")
+    if typeof(str) != "string" or typeof(num) != "number"
     {
         error("expected indicator function to return string and number")
     }
-    if(min and typeof(min) != "number")
+    if min and typeof(min) != "number"
     {
         error("expected `min` to be a number")
     }
-    if(max and typeof(max) != "number")
+    if max and typeof(max) != "number"
     {
         error("expected `max` to be a number")
     }
@@ -138,10 +138,10 @@ function micro.debug.addIndicator(fn, min=0, max=0)
 
 function micro.debug.removeIndicator(indicator)
 {
-    for(var i = 0; i < indicators.len; i++)
+    for var i = 0; i < indicators.len; i++
     {
         const v = indicators[i]
-        if(v == indicator)
+        if v == indicator
         {
             indicators.delete(i)
             return

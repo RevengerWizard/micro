@@ -4,19 +4,19 @@ const buttonsPressed = {}
 
 function micro.mouse._event(e)
 {
-    switch(e.type)
+    switch e.type
     {
-        case 'mousemove':
+        case 'mousemove'
         {
             position.x = e.x
             position.y = e.y
         }
-        case 'mousedown':
+        case 'mousedown'
         {
             buttonsDown[e.button] = true
             buttonsPressed[e.button] = true
         }
-        case 'mouseup':
+        case 'mouseup'
         {
             buttonsDown[e.button] = false
         }
@@ -25,7 +25,7 @@ function micro.mouse._event(e)
 
 function micro.mouse.reset()
 {
-    for(const k, v in buttonsPressed)
+    for const k, v in buttonsPressed
     {
         buttonsPressed[k] = nil
     }
@@ -33,20 +33,18 @@ function micro.mouse.reset()
 
 function micro.mouse.isDown(...button)
 {
-    for(const x in button)
+    for const x in button
     {
-        if(buttonsDown.get(x))
-            return true
+        if buttonsDown.get(x) { return true }
     }
     return false
 }
 
 function micro.mouse.wasPressed(...button)
 {
-    for(const x in button)
+    for const x in button
     {
-        if(buttonsPressed.get(x))
-            return true
+        if buttonsPressed.get(x) { return true }
     }
     return false
 }

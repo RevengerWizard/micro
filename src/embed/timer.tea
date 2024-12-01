@@ -8,13 +8,13 @@ var avgCount = 1
 function micro.timer.step()
 {
     const now = micro.timer.getTime()
-    if(last == 0) last = now
+    if last == 0 { last = now }
     delta = now - last
     last = now
     avgTimer = avgTimer - delta
     avgAcc = avgAcc + delta
     avgCount = avgCount + 1
-    if(avgTimer <= 0)
+    if avgTimer <= 0
     {
         average = avgAcc / avgCount
         avgTimer = avgTimer + 1
