@@ -17,13 +17,17 @@ static sr_Pixel get_color(tea_State* T, int idx)
 static sr_Rect get_rect(tea_State* T, int idx)
 {
     tea_check_map(T, idx);
-    tea_get_attr(T, idx, "x");
+    tea_push_literal(T, "x");
+    tea_get_index(T, idx);
     int x = tea_check_integer(T, -1);
-    tea_get_attr(T, idx, "y");
+    tea_push_literal(T, "y");
+    tea_get_index(T, idx);
     int y = tea_check_integer(T, -1);
-    tea_get_attr(T, idx, "w");
+    tea_push_literal(T, "w");
+    tea_get_index(T, idx);
     int w = tea_check_integer(T, -1);
-    tea_get_attr(T, idx, "h");
+    tea_push_literal(T, "h");
+    tea_get_index(T, idx);
     int h = tea_check_integer(T, -1);
     tea_pop(T, 4);
     return sr_rect(x, y, w, h);

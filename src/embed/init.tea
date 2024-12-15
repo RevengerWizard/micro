@@ -2,27 +2,27 @@ const handlers = {
     keydown = function(e) {
         if hasattr(micro.debug, "_event") { micro.debug._event(e) }
         if hasattr(micro.keyboard, "_event") { micro.keyboard._event(e) }
-        if hasattr(micro, "keydown") { micro.keydown(e.key) }
+        if hasattr(micro, "keydown") { micro.keydown(e['key']) }
     },
     keyup = function(e) {
         if hasattr(micro.keyboard, "_event") { micro.keyboard._event(e) }
-        if hasattr(micro, "keyup") { micro.keyup(e.key) }
+        if hasattr(micro, "keyup") { micro.keyup(e['key']) }
     },
     mousemove = function(e) {
         if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mousemove") { micro.mousemove(e.x, e.y) }
+        if hasattr(micro, "mousemove") { micro.mousemove(e['x'], e['y']) }
     },
     mousedown = function(e) {
         if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mousedown") { micro.mousedown(e.button) }
+        if hasattr(micro, "mousedown") { micro.mousedown(e['button']) }
     },
     mouseup = function(e) {
         if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mouseup") { micro.mouseup(e.button) }
+        if hasattr(micro, "mouseup") { micro.mouseup(e['button']) }
     },
     textinput = function(e) {
         if hasattr(micro.debug, "_event") { micro.debug._event(e) }
-        if hasattr(micro, "textinput") { micro.textinput(e.text) }
+        if hasattr(micro, "textinput") { micro.textinput(e['text']) }
     },
     quit = function(e) {
         if hasattr(micro, "quit") { micro.quit() }
@@ -41,9 +41,9 @@ function run()
     micro.event.pump()
     for const e in micro.event.poll()
     {
-        if e.get("type") and handlers.get(e.type)
+        if e.get("type") and handlers.get(e['type'])
         {
-            handlers[e.type](e)
+            handlers[e['type']](e)
         }
     }
     if hasattr(micro.timer, "step") { micro.timer.step() }

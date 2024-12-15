@@ -3,14 +3,14 @@ const keysPressed = {}
 
 function micro.keyboard._event(e)
 {
-    if e.type == "keydown"
+    if e['type'] == "keydown"
     {
-        keysDown[e.key] = true
-        keysPressed[e.key] = true
+        keysDown[e['key']] = true
+        keysPressed[e['key']] = true
     }
-    else if e.type == "keyup"
+    else if e['type'] == "keyup"
     {
-        keysDown[e.key] = false
+        keysDown[e['key']] = false
     }
 }
 
