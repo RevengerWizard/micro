@@ -37,6 +37,8 @@ int main(int argc, char** argv)
                 fputc('\n', stderr);
                 break;
             }
+            if(tea_is_number(T, -1) && tea_get_number(T, -1) == 1)
+                break;
             tea_pop(T, 1);
         }
         spxeRender(pixbuf);

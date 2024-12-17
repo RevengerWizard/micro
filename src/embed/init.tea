@@ -43,6 +43,11 @@ function run()
     {
         if e.get("type") and handlers.get(e['type'])
         {
+            if e['type'] == "quit"
+            {
+                handlers[e['type']](e)
+                return 1
+            }
             handlers[e['type']](e)
         }
     }
@@ -63,7 +68,7 @@ function run()
 
 function micro.run()
 {
-    run()
+    return run()
 }
 
 import sys, os
