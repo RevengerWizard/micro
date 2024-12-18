@@ -19,7 +19,7 @@
 #define ftello ftell
 #define fseeko64 fseek
 #define ftello64 ftell
-#include "miniz.c"
+#include "miniz.h"
 #include "fs.h"
 
 #if _WIN32

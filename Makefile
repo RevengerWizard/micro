@@ -17,9 +17,8 @@ EMBED_FONT_FILES = $(wildcard src/embed/*.ttf)
 EMBED_C_HEADERS = $(patsubst src/embed/%.tea, src/embed/%_tea.h, $(EMBED_TEA_FILES))
 EMBED_C_HEADERS += $(patsubst src/embed/%.ttf, src/embed/%_ttf.h, $(EMBED_FONT_FILES))
 
-LIB_FILTER = lib/miniz.c
-LIB_SRC = $(filter-out $(LIB_FILTER),$(wildcard lib/**/*.c))
-LIB_SRC += $(filter-out $(LIB_FILTER),$(wildcard lib/*.c))
+LIB_SRC = $(wildcard lib/**/*.c)
+LIB_SRC += $(wildcard lib/*.c)
 LIB_OBJS = $(LIB_SRC:.c=.o)
 
 OBJS = $(SRC_OBJS) $(LIB_OBJS)
