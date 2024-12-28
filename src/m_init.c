@@ -22,6 +22,7 @@ static const tea_Reg mods[] = {
     { "Image", micro_open_image },
     /* Modules */
     { "audio", micro_open_audio },
+    { "data", micro_open_data_ },
     { "keyboard", micro_open_keyboard },
     { "mouse", micro_open_mouse },
     { "event", micro_open_event },

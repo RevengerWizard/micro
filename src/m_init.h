@@ -10,6 +10,7 @@ void micro_open_font(tea_State* T);
 void micro_open_image(tea_State* T);
 
 void micro_open_audio(tea_State* T);
+void micro_open_data_(tea_State* T);
 void micro_open_event(tea_State* T);
 void micro_open_system(tea_State* T);
 void micro_open_keyboard(tea_State* T);
