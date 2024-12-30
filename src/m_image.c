@@ -11,6 +11,42 @@
 
 #define CLASS_NAME  IMAGE_CLASS_NAME
 
+sr_Pixel get_color(tea_State* T, int idx)
+{
+    int r = tea_opt_integer(T, idx, 255);
+    int g = tea_opt_integer(T, idx + 1, 255);
+    int b = tea_opt_integer(T, idx + 2, 255);
+    int a = tea_opt_integer(T, idx + 3, 255);
+    return sr_pixel(r, g, b, a);
+}
+
+sr_Rect get_rect(tea_State* T, int idx)
+{
+    tea_check_map(T, idx);
+    tea_push_literal(T, "x");
+    tea_get_index(T, idx);
+    int x = tea_check_integer(T, -1);
+    tea_push_literal(T, "y");
+    tea_get_index(T, idx);
+    int y = tea_check_integer(T, -1);
+    tea_push_literal(T, "w");
+    tea_get_index(T, idx);
+    int w = tea_check_integer(T, -1);
+    tea_push_literal(T, "h");
+    tea_get_index(T, idx);
+    int h = tea_check_integer(T, -1);
+    tea_pop(T, 4);
+    return sr_rect(x, y, w, h);
+}
+
+void check_subrect(tea_State* T, int idx, sr_Buffer* b, sr_Rect* r)
+{
+    if(r->x < 0 || r->y < 0 || r->x + r->w > b->w || r->y + r->h > b->h)
+    {
+        tea_arg_error(T, idx, "sub rectangle out of bounds");
+    }
+}
+
 static void image_free(void* ud)
 {
     Image* self = (Image*)ud;
@@ -107,13 +143,10 @@ static void image_reset(tea_State* T)
     sr_reset(self->buf);
 }
 
-static sr_Pixel get_color(tea_State* T, int idx)
+static void image_clear(tea_State* T)
 {
-    int r = tea_opt_integer(T, idx, 255);
-    int g = tea_opt_integer(T, idx + 1, 255);
-    int b = tea_opt_integer(T, idx + 2, 255);
-    int a = tea_opt_integer(T, idx + 3, 255);
-    return sr_pixel(r, g, b, a);
+    Image* self = (Image*)tea_check_udata(T, 0, CLASS_NAME);
+    sr_clear(self->buf, get_color(T, 1));
 }
 
 static void image_setPixel(tea_State* T)
@@ -122,6 +155,58 @@ static void image_setPixel(tea_State* T)
     int x = tea_check_integer(T, 1);
     int y = tea_check_integer(T, 2);
     sr_drawPixel(self->buf, get_color(T, 3), x, y);
+}
+
+static void image_getPixel(tea_State* T)
+{
+    Image* self = (Image*)tea_check_udata(T, 0, CLASS_NAME);
+    int x = tea_check_integer(T, 1);
+    int y = tea_check_integer(T, 2);
+    sr_Pixel px = sr_getPixel(self->buf, x, y);
+    tea_new_list(T, 4);
+    tea_push_integer(T, px.rgba.r); tea_add_item(T, -2);
+    tea_push_integer(T, px.rgba.g); tea_add_item(T, -2);
+    tea_push_integer(T, px.rgba.b); tea_add_item(T, -2);
+    tea_push_integer(T, px.rgba.a); tea_add_item(T, -2);
+}
+
+static void image_copyPixels(tea_State* T)
+{
+    sr_Rect sub;
+    Image* self = (Image*)tea_check_udata(T, 0, CLASS_NAME);
+    Image* src = (Image*)tea_check_udata(T, 1, CLASS_NAME);
+    int x = tea_opt_integer(T, 2, 0);
+    int y = tea_opt_integer(T, 3, 0);
+    int hassub = 0;
+    if(!tea_is_nonenil(T, 4))
+    {
+        hassub = 1;
+        sub = get_rect(T, 4);
+        check_subrect(T, 4, src->buf, &sub);
+    }
+    float sx = tea_opt_number(T, 5, 1);
+    float sy = tea_opt_number(T, 6, sx);
+    sr_copyPixels(self->buf, src->buf, x, y,
+                    hassub ? &sub : NULL, sx, sy);
+}
+
+static void image_noise(tea_State* T)
+{
+    Image* self = tea_check_udata(T, 0, CLASS_NAME);
+    int seed = tea_opt_number(T, 1, rand());
+    int low = tea_opt_number(T, 2, 0);
+    int high = tea_opt_number(T, 3, 0);
+    int grey = tea_opt_bool(T, 4, false);
+    sr_noise(self->buf, seed, low, high, grey);
+}
+
+static void image_floodFill(tea_State* T)
+{
+    Image* self = tea_check_udata(T, 0, CLASS_NAME);
+    int x = tea_check_integer(T, 1);
+    int y = tea_check_integer(T, 2);
+    sr_Pixel px = get_color(T, 3);
+    sr_floodFill(self->buf, px, x, y);
 }
 
 static void image_getWidth(tea_State* T)
@@ -147,7 +232,12 @@ static const tea_Methods reg[] = {
     { "fromBlank", "static", image_fromBlank, 2, 0 },
     { "clone", "method", image_clone, 1, 0 },
     { "reset", "method", image_reset, 1, 0 },
+    { "clear", "method", image_clear, 1, 4 },
     { "setPixel", "method", image_setPixel, 3, 4 },
+    { "getPixel", "method", image_getPixel, 3, 0 },
+    { "copyPixels", "method", image_copyPixels, 2, 5 },
+    { "noise", "method", image_noise, 1, 4 },
+    { "floodFill", "method", image_floodFill, 3, 4 },
     { "getWidth", "method", image_getWidth, 1, 0 },
     { "getHeight", "method", image_getHeight, 1, 0 },
     { "tostring", "method", image_tostring, 1, 0 },

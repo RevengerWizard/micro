@@ -5,42 +5,6 @@
 #include "m_init.h"
 #include "m_image.h"
 
-static sr_Pixel get_color(tea_State* T, int idx)
-{
-    int r = tea_opt_integer(T, idx, 255);
-    int g = tea_opt_integer(T, idx + 1, 255);
-    int b = tea_opt_integer(T, idx + 2, 255);
-    int a = tea_opt_integer(T, idx + 3, 255);
-    return sr_pixel(r, g, b, a);
-}
-
-static sr_Rect get_rect(tea_State* T, int idx)
-{
-    tea_check_map(T, idx);
-    tea_push_literal(T, "x");
-    tea_get_index(T, idx);
-    int x = tea_check_integer(T, -1);
-    tea_push_literal(T, "y");
-    tea_get_index(T, idx);
-    int y = tea_check_integer(T, -1);
-    tea_push_literal(T, "w");
-    tea_get_index(T, idx);
-    int w = tea_check_integer(T, -1);
-    tea_push_literal(T, "h");
-    tea_get_index(T, idx);
-    int h = tea_check_integer(T, -1);
-    tea_pop(T, 4);
-    return sr_rect(x, y, w, h);
-}
-
-static void check_subrect(tea_State* T, int idx, sr_Buffer* b, sr_Rect* r)
-{
-    if(r->x < 0 || r->y < 0 || r->x + r->w > b->w || r->y + r->h > b->h)
-    {
-        tea_arg_error(T, idx, "sub rectangle out of bounds");
-    }
-}
-
 static bool inited = false;
 
 static void gfx_init(tea_State* T)
