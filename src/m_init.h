@@ -20,7 +20,6 @@ void micro_open_window(tea_State* T);
 void micro_open_filesystem(tea_State* T);
 void micro_open_gfx(tea_State* T);
 void micro_open_fx(tea_State* T);
-void micro_open_debug(tea_State* T);
 
 bool micro_open(tea_State* T);
 

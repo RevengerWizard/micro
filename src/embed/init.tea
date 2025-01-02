@@ -1,6 +1,5 @@
 const handlers = {
     keydown = function(e) {
-        if hasattr(micro.debug, "_event") { micro.debug._event(e) }
         if hasattr(micro.keyboard, "_event") { micro.keyboard._event(e) }
         if hasattr(micro, "keydown") { micro.keydown(e['key']) }
     },
@@ -21,7 +20,6 @@ const handlers = {
         if hasattr(micro, "mouseup") { micro.mouseup(e['button']) }
     },
     textinput = function(e) {
-        if hasattr(micro.debug, "_event") { micro.debug._event(e) }
         if hasattr(micro, "textinput") { micro.textinput(e['text']) }
     },
     quit = function(e) {
@@ -61,7 +59,6 @@ function run()
     }
     if hasattr(micro.gfx, "clear") { micro.gfx.clear() }
     if hasattr(micro, "draw") { micro.draw() }
-    if hasattr(micro.debug, "draw") { micro.debug.draw() }
     if hasattr(micro.keyboard, "reset") { micro.keyboard.reset() }
     if hasattr(micro.mouse, "reset") { micro.mouse.reset() }
 }

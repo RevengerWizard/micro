@@ -8,11 +8,6 @@ void micro_open_keyboard(tea_State* T)
     tea_create_submodule(T, "keyboard", NULL);
 }
 
-void micro_open_debug(tea_State* T)
-{
-    tea_create_submodule(T, "debug", NULL);
-}
-
 static const tea_Reg mods[] = {
     /* Objects */
     { "Source", micro_open_source },
@@ -32,7 +27,6 @@ static const tea_Reg mods[] = {
     { "filesystem", micro_open_filesystem },
     { "gfx", micro_open_gfx },
     { "fx", micro_open_fx },
-    { "debug", micro_open_debug },
     { NULL, NULL }
 };
 
@@ -51,7 +45,6 @@ bool micro_open(tea_State* T)
     * -- these should be ordered in the array in the order we want them loaded;
     * init.tea should always be last since it depends on all the other modules 
     */
-#include "debug_tea.h"
 #include "graphics_tea.h"
 #include "keyboard_tea.h"
 #include "mouse_tea.h"
@@ -63,7 +56,6 @@ bool micro_open(tea_State* T)
         const char* data;
         int size;
     } items[] = {
-        { "debug.tea", debug_tea, sizeof(debug_tea) },
         { "graphics.tea", graphics_tea, sizeof(graphics_tea) },
         { "keyboard.tea", keyboard_tea, sizeof(keyboard_tea) },
         { "mouse.tea", mouse_tea, sizeof(mouse_tea) },
