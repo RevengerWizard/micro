@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include <tea.h>
-#include "sera/sera.h"
+#include "sera.h"
 #include "fs.h"
 #include "ttf.h"
 #include "m_image.h"

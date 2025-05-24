@@ -5,7 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "sera/sera.h"
+#include "sera.h"
 #include "fs.h"
 #include "m_image.h"
 

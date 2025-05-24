@@ -5,7 +5,7 @@
 #include "teax.h"
 
 #include "def.h"
-#include "vec/vec.h"
+#include "vec.h"
 #include "m_source.h"
 
 #define CLASS_NAME SOURCE_CLASS_NAME
@@ -184,7 +184,7 @@ static Source* newSource(tea_State* T)
     self->pan = 0.0;
     recalcGains(self);
     /* Init tea pointer to the actual Source struct */
-    Source** p = tea_new_udata(T, sizeof(self), CLASS_NAME);
+    Source** p = tea_new_udata(T, sizeof(Source*), CLASS_NAME);
     tea_set_finalizer(T, source_free);
     *p = self;
     return self;

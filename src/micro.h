@@ -1,8 +1,8 @@
 #ifndef _MICRO_H
 #define _MICRO_H
 
-#include <miniaudio.h>
-#include "sera/sera.h"
+#include "miniaudio.h"
+#include "sera.h"
 #include "spxe.h"
 
 extern sr_Buffer* screen;

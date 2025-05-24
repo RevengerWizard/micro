@@ -3,4 +3,5 @@
 *.so
 *.exe
 *.o
+*.clangd
 src/embed/*.h

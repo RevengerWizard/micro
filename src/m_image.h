@@ -3,7 +3,7 @@
 
 #include <tea.h>
 
-#include "sera/sera.h"
+#include "sera.h"
 
 #define IMAGE_CLASS_NAME   "micro.Image"
 

@@ -4,7 +4,7 @@
 #include <math.h>
 
 #include "def.h"
-#include "sera/sera.h"
+#include "sera.h"
 #include "m_image.h"
 
 #define LERP(bits, a, b, p) ((a) + ((((b) - (a)) * (p)) >> (bits)))
