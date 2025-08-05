@@ -6,7 +6,7 @@ RM = del
 INCLUDE = -Ilib -Isrc -Isrc/embed
 LIBS = 
 
-LDFLAGS = $(LIBS) -lopengl32 -lglfw3dll -lglew32 -ltea00
+LDFLAGS = $(LIBS) -lopengl32 -lglfw3 -lglew32 -ltea00
 
 SRC = $(wildcard src/*.c)
 SRC_HEADERS = $(wildcard src/*.h)
@@ -17,8 +17,7 @@ EMBED_FONT_FILES = $(wildcard src/embed/*.ttf)
 EMBED_C_HEADERS = $(patsubst src/embed/%.tea, src/embed/%_tea.h, $(EMBED_TEA_FILES))
 EMBED_C_HEADERS += $(patsubst src/embed/%.ttf, src/embed/%_ttf.h, $(EMBED_FONT_FILES))
 
-LIB_SRC = $(wildcard lib/**/*.c)
-LIB_SRC += $(wildcard lib/*.c)
+LIB_SRC = $(wildcard lib/*.c)
 LIB_OBJS = $(LIB_SRC:.c=.o)
 
 OBJS = $(SRC_OBJS) $(LIB_OBJS)
