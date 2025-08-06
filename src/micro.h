@@ -8,5 +8,6 @@
 extern sr_Buffer* screen;
 extern Px* pixbuf;
 extern ma_device device;
+extern double maxFps;
 
 #endif

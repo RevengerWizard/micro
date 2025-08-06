@@ -10,6 +10,8 @@
 
 #include <tea.h>
 
+#include "spxe.h"
+
 static char* dirname(char* str)
 {
     char* p = str + strlen(str);
@@ -25,10 +27,10 @@ static char* dirname(char* str)
     return str;
 }
 
+static const char* const opts[] = { "exedir", "appdata", NULL };
+
 static void system_info(tea_State* T)
-{
-    const char* const opts[] = { "exedir", "appdata", NULL };
-    
+{    
     int id = tea_check_option(T, 0, NULL, opts);
     switch(id)
     {
@@ -73,12 +75,16 @@ static void system_info(tea_State* T)
 
 static void system_getClipboard(tea_State* T)
 {
-
+    GLFWwindow* window = spxeGetWindow();
+    const char* text = glfwGetClipboardString(window);
+    tea_push_string(T, text);
 }
 
 static void system_setClipboard(tea_State* T)
 {
+    GLFWwindow* window = spxeGetWindow();
     const char* text = tea_check_string(T, 0);
+    glfwSetClipboardString(window, text);
 }
 
 static const tea_Reg reg[] = {

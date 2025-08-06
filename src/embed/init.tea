@@ -1,29 +1,46 @@
+function call(mod, name, ...v)
+{
+    if hasattr(mod, name) { return getattr(mod, name)(...v) }
+}
+
+function merge(dst, src)
+{
+    for const key, val in src
+    {
+        if key not in dst
+        {
+            dst[key] = val
+        }
+    }
+    return dst
+}
+
 const handlers = {
     keydown = function(e) {
-        if hasattr(micro.keyboard, "_event") { micro.keyboard._event(e) }
-        if hasattr(micro, "keydown") { micro.keydown(e['key']) }
+        call(micro.keyboard, '_event', e)
+        call(micro, 'keydown', e['key'])
     },
     keyup = function(e) {
-        if hasattr(micro.keyboard, "_event") { micro.keyboard._event(e) }
-        if hasattr(micro, "keyup") { micro.keyup(e['key']) }
+        call(micro.keyboard, '_event', e)
+        call(micro, 'keyup', e['key'])
     },
     mousemove = function(e) {
-        if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mousemove") { micro.mousemove(e['x'], e['y']) }
+        call(micro.mouse, '_event', e)
+        call(micro, 'mousemove', e['x'], e['y'])
     },
     mousedown = function(e) {
-        if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mousedown") { micro.mousedown(e['button']) }
+        call(micro.mouse, '_event', e)
+        call(micro, 'mousedown', e, ['button'])
     },
     mouseup = function(e) {
-        if hasattr(micro.mouse, "_event") { micro.mouse._event(e) }
-        if hasattr(micro, "mouseup") { micro.mouseup(e['button']) }
+        call(micro.mouse, '_event', e)
+        call(micro, 'mouseup', e['button'])
     },
     textinput = function(e) {
-        if hasattr(micro, "textinput") { micro.textinput(e['text']) }
+        call(micro, 'textinput', e['text'])
     },
     quit = function(e) {
-        if hasattr(micro, "quit") { micro.quit() }
+        call(micro, 'quit')
     }
 }
 
@@ -49,18 +66,12 @@ function run()
             handlers[e['type']](e)
         }
     }
-    if hasattr(micro.timer, "step") { micro.timer.step() }
-    if hasattr(micro, "update")
-    {
-        if hasattr(micro.timer, "getDelta")
-        {
-            micro.update(micro.timer.getDelta())
-        }
-    }
-    if hasattr(micro.gfx, "clear") { micro.gfx.clear() }
-    if hasattr(micro, "draw") { micro.draw() }
-    if hasattr(micro.keyboard, "reset") { micro.keyboard.reset() }
-    if hasattr(micro.mouse, "reset") { micro.mouse.reset() }
+    call(micro.timer, "step")
+    call(micro, "update", call(micro.timer, "getDelta"))
+    call(micro.gfx, "clear")
+    call(micro, "draw")
+    call(micro.keyboard, "reset")
+    call(micro.mouse, "reset")
 }
 
 function micro.run()
@@ -90,20 +101,38 @@ else
         var idx = 0
         while micro.filesystem.mount(dir + "/pak" + tostring(idx))
         {
-            idx = idx + 1
+            idx += 1
         }
         if idx != 0 { break }
     }
 }
 
-var c = {}
+var def = {
+    title = 'micro',
+    width = 200,
+    height = 200,
+    maxfps = 60
+}, conf = {}
+
 if micro.filesystem.exists("conf.tea")
 {
-
+    const status, res = pcall(eval, micro.filesystem.read("conf.tea"))
+    if status == true
+    {
+        conf = res
+        assert(typeof(conf) == 'map')
+        conf = merge(conf, def)
+    }
+    else
+    {
+        conf = def
+    }
 }
 
-micro.gfx.init(200, 200)
+micro.gfx.init(conf['width'], conf['height'])
 micro.gfx.setClearColor(0, 0, 0)
+micro.window.setTitle(conf['title'])
+micro.gfx.setMaxFps(conf['maxfps'])
 micro.audio.init()
 
 if micro.filesystem.exists("main.tea")
@@ -112,4 +141,4 @@ if micro.filesystem.exists("main.tea")
     import "main"
 }
 
-if hasattr(micro, "load") { micro.load() }
+call(micro, "load")

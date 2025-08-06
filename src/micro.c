@@ -43,7 +43,7 @@ int main(int argc, char** argv)
         }
         spxeRender(pixbuf);
         /* Wait for next frame */
-        double step = 1.0 / 60.0;
+        double step = 1.0 / maxFps;
         double now = glfwGetTime();
         double wait = step - (now - last);
         last += step;

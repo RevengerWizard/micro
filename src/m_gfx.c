@@ -5,6 +5,7 @@
 #include "m_init.h"
 #include "m_image.h"
 
+double maxFps = 60;
 static bool inited = false;
 
 static void gfx_init(tea_State* T)
@@ -35,9 +36,10 @@ static void gfx_setAlpha(tea_State* T)
     sr_setAlpha(screen, tea_opt_integer(T, 1, 255));
 }
 
+static const char* const modes[] = { "alpha", "color", "add", "subtract", "multiply", "lighten", "darken", "screen", "difference", NULL };
+
 static void gfx_setBlend(tea_State* T)
 {
-    const char* const modes[] = { "alpha", "color", "add", "subtract", "multiply", "lighten", "darken", "screen", "difference", NULL };
     int mode = tea_check_option(T, 0, "alpha", modes);
     sr_setBlend(screen, mode);
 }
@@ -45,6 +47,11 @@ static void gfx_setBlend(tea_State* T)
 static void gfx_setColor(tea_State* T)
 {
     sr_setColor(screen, get_color(T, 0));
+}
+
+static void gfx_setMaxFps(tea_State* T)
+{
+    maxFps = tea_opt_number(T, 0, 60);
 }
 
 static void gfx_clear(tea_State* T)
@@ -124,6 +131,7 @@ static const tea_Reg reg[] = {
     { "setAlpha", gfx_setAlpha, 0, 1 },
     { "setBlend", gfx_setBlend, 1, 0 },
     { "setColor", gfx_setColor, 0, 4 },
+    { "setMaxFps", gfx_setMaxFps, 0, 4 },
     { "clear", gfx_clear, 0, 4 },
     { "pixel", gfx_pixel, 2, 4 },
     { "line", gfx_line, 4, 4 },
