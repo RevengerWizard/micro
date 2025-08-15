@@ -111,6 +111,10 @@ var def = {
     title = 'micro',
     width = 200,
     height = 200,
+    window = {
+        width = 800,
+        height = 800
+    },
     maxfps = 60
 }, conf = {}
 
@@ -136,6 +140,7 @@ else
 micro.gfx.init(conf['width'], conf['height'])
 micro.gfx.setClearColor(0, 0, 0)
 micro.window.setTitle(conf['title'])
+micro.window.setSize(conf['window']['width'], conf['window']['height'])
 micro.gfx.setMaxFps(conf['maxfps'])
 micro.audio.init()
 
