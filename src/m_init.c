@@ -24,9 +24,9 @@ static const tea_Reg mods[] = {
     { "system", micro_open_system },
     { "timer", micro_open_timer },
     { "window", micro_open_window },
-    { "filesystem", micro_open_filesystem },
+    { "fs", micro_open_filesystem },
     { "gfx", micro_open_gfx },
-    { "fx", micro_open_fx },
+    { "imagefx", micro_open_fx },
     { NULL, NULL }
 };
 

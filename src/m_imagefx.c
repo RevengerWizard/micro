@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
@@ -356,6 +354,6 @@ static const tea_Reg reg[] = {
 
 void micro_open_fx(tea_State* T)
 {
-    tea_create_submodule(T, "fx", reg);
+    tea_create_submodule(T, "imagefx", reg);
     initTables();
 }

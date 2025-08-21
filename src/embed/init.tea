@@ -85,7 +85,7 @@ if sys.argv.len > 1
 {
     for var i = 1; i < sys.argv.len; i += 1
     {
-        micro.filesystem.mount(sys.argv[i])
+        micro.fs.mount(sys.argv[i])
     }
 }
 else
@@ -99,7 +99,7 @@ else
     for const dir in dirs
     {
         var idx = 0
-        while micro.filesystem.mount(dir + "/pak" + tostring(idx))
+        while micro.fs.mount(dir + "/pak" + tostring(idx))
         {
             idx += 1
         }
@@ -107,7 +107,17 @@ else
     }
 }
 
-var def = {
+var data = {}
+if micro.fs.exists("conf.tea")
+{
+    import 'conf' as mod
+    if hasattr(mod, 'conf') and mod.conf is Map
+    {
+        data = mod.conf
+    }
+}
+
+const conf = merge({
     title = 'micro',
     width = 200,
     height = 200,
@@ -116,26 +126,7 @@ var def = {
         height = 800
     },
     maxfps = 60
-}, conf = {}
-
-if micro.filesystem.exists("conf.tea")
-{
-    const status, res = pcall(eval, micro.filesystem.read("conf.tea"))
-    if status == true
-    {
-        conf = res
-        assert(typeof(conf) == 'map')
-        conf = merge(conf, def)
-    }
-    else
-    {
-        conf = def
-    }
-}
-else
-{
-    conf = def
-}
+}, data)
 
 micro.gfx.init(conf['width'], conf['height'])
 micro.gfx.setClearColor(0, 0, 0)
@@ -144,7 +135,7 @@ micro.window.setSize(conf['window']['width'], conf['window']['height'])
 micro.gfx.setMaxFps(conf['maxfps'])
 micro.audio.init()
 
-if micro.filesystem.exists("main.tea")
+if micro.fs.exists("main.tea")
 {
     // Load project file
     import "main"

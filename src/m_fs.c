@@ -153,6 +153,6 @@ static const tea_Reg reg[] = {
 
 void micro_open_filesystem(tea_State* T)
 {
-    tea_create_submodule(T, "filesystem", reg);
+    tea_create_submodule(T, "fs", reg);
     atexit(fs_deinit);
 }
