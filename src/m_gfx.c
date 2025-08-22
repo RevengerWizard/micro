@@ -138,7 +138,7 @@ static const tea_Reg reg[] = {
     { "rect", gfx_rect, 5, 4 },
     { "circle", gfx_circle, 4, 4 },
     { "draw", gfx_draw, 3, 6 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_gfx(tea_State* T)

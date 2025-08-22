@@ -1,6 +1,7 @@
 CC = gcc
 CDEBUG = -O0 -g
-CFLAGS = $(CDEBUG) $(INCLUDE)
+CCWARN = -Wall -Wextra
+CFLAGS = $(CCWARN) $(CDEBUG) $(INCLUDE)
 RM = del
 
 INCLUDE = -Ilib -Isrc -Isrc/embed
@@ -37,15 +38,13 @@ $(TARGET): $(OBJS)
 
 src/micro.o: src/micro.c $(EMBED_C_HEADERS)
 
-src/%.o: src/%.c $(EMBED_C_HEADERS)
+src/m_init.o: src/m_init.c $(EMBED_C_HEADERS)
+
+src/%.o: src/%.c
 	$(E) "CC           $@"
 	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
 
 lib/%.o: lib/%.c
-	$(E) "CC           $@"
-	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
-
-lib/sera/%.o: lib/sera/%.c
 	$(E) "CC           $@"
 	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
 

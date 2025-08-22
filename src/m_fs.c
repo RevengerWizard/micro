@@ -148,7 +148,7 @@ static const tea_Reg reg[] = {
     { "listDir", filesystem_listDir, 1, 0 },
     { "append", filesystem_append, 2, 0 },
     { "makeDirs", filesystem_makeDirs, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_filesystem(tea_State* T)

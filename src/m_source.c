@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -92,10 +91,10 @@ static tea_State* teaState;
 typedef struct
 {
     int type;
-    Source *source;
+    Source* source;
     int i;
     double f;
-    void *p;
+    void* p;
 } Command;
 
 enum
@@ -710,7 +709,7 @@ static const tea_Methods reg[] = {
     { "play", "method", source_play, 1, 1 },
     { "pause", "method", source_pause, 1, 0 },
     { "stop", "method", source_stop, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_source(tea_State* T)

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -6,7 +5,6 @@
 #include "jo_gif.c"
 
 #include <tea.h>
-#include "def.h"
 #include "m_image.h"
 
 #define CLASS_NAME "micro.Gif"
@@ -104,7 +102,7 @@ static const tea_Methods reg[] = {
     { "new", "static", gif_new, 3, 1 },
     { "update", "method", gif_update, 3, 0 },
     { "close", "method", gif_close, 0, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_gif(tea_State* T)

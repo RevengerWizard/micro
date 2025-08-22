@@ -69,7 +69,7 @@ static const tea_Methods reg[] = {
     { "fromString", "static", data_fromString, 1, 0 },
     { "getLength", "method", data_getLength, 1, 0 },
     { "tostring", "method", data_tostring, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_data(tea_State* T)
@@ -154,7 +154,7 @@ static void data_decompress(tea_State* T)
 static const tea_Reg mod[] = {
     { "compress", data_compress, 1, 0 },
     { "decompress", data_decompress, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_data_(tea_State* T)

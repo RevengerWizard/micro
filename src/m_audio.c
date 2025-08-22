@@ -19,6 +19,7 @@ static void audio_callback(ma_device* pDevice, void* pOutput, const void* pInput
     int16_t* buffer = (int16_t*)pOutput;
     int len = frameCount * pDevice->playback.channels;
     int i;
+    UNUSED(T);
 
     /* Process source commands */
     source_processCommands();
@@ -32,13 +33,14 @@ static void audio_callback(ma_device* pDevice, void* pOutput, const void* pInput
         buffer[i] = CLAMP(x, -32768, 32767);
     }
 
-    (void)pInput; /* Unused */
+    UNUSED(pInput);
 }
 
 static void audio_init(tea_State* T)
 {
     int rate = tea_opt_integer(T, 0, 44100);
     int bufferSize = tea_opt_integer(T, 1, 44100);
+    UNUSED(bufferSize);
     if(inited)
     {
         tea_error(T, "audio is already inited");
@@ -69,7 +71,7 @@ static void audio_init(tea_State* T)
 
 static const tea_Reg reg[] = {
     { "init", audio_init, 0, 2 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_audio(tea_State* T)

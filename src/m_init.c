@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "m_init.h"
 
@@ -8,7 +7,7 @@ void micro_open_keyboard(tea_State* T)
     tea_create_submodule(T, "keyboard", NULL);
 }
 
-static const tea_Reg mods[] = {
+static const struct { char* name; void (*fn)(tea_State*); } mods[] = {
     /* Objects */
     { "Source", micro_open_source },
     { "Data", micro_open_data },

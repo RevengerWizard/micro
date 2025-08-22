@@ -241,7 +241,7 @@ static const tea_Methods reg[] = {
     { "getWidth", "method", image_getWidth, 1, 0 },
     { "getHeight", "method", image_getHeight, 1, 0 },
     { "tostring", "method", image_tostring, 1, 0 },
-    { NULL, NULL, NULL }
+    { NULL }
 };
 
 void micro_open_image(tea_State* T)

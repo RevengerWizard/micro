@@ -122,7 +122,7 @@ static const tea_Methods reg[] = {
     { "getWidth", "method", font_getWidth, 2, 0 },
     { "getHeight", "method", font_getHeight, 1, 0 },
     { "tostring", "method", font_tostring, 1, 0 },
-    { NULL, NULL, NULL }
+    { NULL }
 };
 
 void micro_open_font(tea_State* T)

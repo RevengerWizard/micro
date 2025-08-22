@@ -37,7 +37,7 @@ static const tea_Reg reg[] = {
     { "setTitle", window_setTitle, 1, 0 },
     { "getTitle", window_getTitle, 0, 0 },
     { "setFullscreen", window_setFullscreen, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_window(tea_State* T)

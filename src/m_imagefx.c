@@ -40,9 +40,8 @@ static sr_Pixel getColorFromTable(tea_State* T, int idx)
         tea_error(T, "expected list");
     }
     sr_Pixel px;
-    int i;
     float v;
-    for(i = 0; i < 4; i++)
+    for(int i = 0; i < 4; i++)
     {
         tea_get_item(T, idx, i + 1);
         v = tea_to_number(T, -1);
@@ -266,8 +265,8 @@ static void fx_displace(tea_State* T)
         tea_arg_error(T, 5, "bad channel");
     for(y = 0; y < self->buf->h; y++)
     {
-        sr_Pixel *d = self->buf->pixels + y * self->buf->w;
-        sr_Pixel *m = map->buf->pixels + y * self->buf->w;
+        sr_Pixel* d = self->buf->pixels + y * self->buf->w;
+        sr_Pixel* m = map->buf->pixels + y * self->buf->w;
         for(x = 0; x < self->buf->w; x++)
         {
             int cx = ((getChannel(*m, *channelX) - (1 << 7)) * scaleX) >> 14;
@@ -349,7 +348,7 @@ static const tea_Reg reg[] = {
     { "wave", fx_wave, 6, 2 },
     { "displace", fx_displace, 7, 0 },
     { "blur", fx_blur, 4, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_fx(tea_State* T)

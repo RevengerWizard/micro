@@ -35,6 +35,7 @@ static void system_info(tea_State* T)
     switch(id)
     {
         case 0:
+        {
 #if _WIN32
             char buf[1024];
             int len = GetModuleFileName(NULL, buf, sizeof(buf) - 1);
@@ -61,7 +62,9 @@ static void system_info(tea_State* T)
             tea_push_string(T, ".");
 #endif
             break;
+        }
         case 1:
+        {
 #if _WIN32
             tea_push_string(T, getenv("APPDATA"));
 #elif __APPLE__
@@ -70,6 +73,7 @@ static void system_info(tea_State* T)
             tea_push_fstring(T, "%s/.local/share", getenv("HOME"));
 #endif
             break;
+        }
     }
 }
 
@@ -91,7 +95,7 @@ static const tea_Reg reg[] = {
     { "info", system_info, 1, 0 },
     { "getClipboard", system_getClipboard, 0, 0 },
     { "setClipboard", system_setClipboard, 1, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_system(tea_State* T)

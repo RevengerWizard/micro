@@ -7,22 +7,28 @@
 
 #include "mapping.h"
 
-// I hate you GLFW
 static int utf32_to_utf8(uint32_t utf32, char* utf8)
 {
-    if (utf32 < 0x80) {
+    if(utf32 < 0x80)
+    {
         utf8[0] = (char)utf32;
         return 1;
-    } else if (utf32 < 0x800) {
+    }
+    else if(utf32 < 0x800)
+    {
         utf8[0] = (char)(0xC0 | (utf32 >> 6));
         utf8[1] = (char)(0x80 | (utf32 & 0x3F));
         return 2;
-    } else if (utf32 < 0x10000) {
+    }
+    else if(utf32 < 0x10000)
+    {
         utf8[0] = (char)(0xE0 | (utf32 >> 12));
         utf8[1] = (char)(0x80 | ((utf32 >> 6) & 0x3F));
         utf8[2] = (char)(0x80 | (utf32 & 0x3F));
         return 3;
-    } else if (utf32 < 0x110000) {
+    }
+    else if(utf32 < 0x110000)
+    {
         utf8[0] = (char)(0xF0 | (utf32 >> 18));
         utf8[1] = (char)(0x80 | ((utf32 >> 12) & 0x3F));
         utf8[2] = (char)(0x80 | ((utf32 >> 6) & 0x3F));
@@ -116,11 +122,13 @@ static void event_poll(tea_State* T)
 
 static void event_pump(tea_State* T)
 {
+    UNUSED(T);
     glfwPollEvents();
 }
 
 static void event_quit(tea_State* T)
 {
+    UNUSED(T);
     GLFWwindow* window = spxeGetWindow();
     glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
@@ -129,7 +137,7 @@ static const tea_Reg reg[] = {
     { "poll", event_poll, 0, 0 },
     { "pump", event_pump, 0, 0 },
     { "quit", event_quit, 0, 0 },
-    { NULL, NULL }
+    { NULL }
 };
 
 void micro_open_event(tea_State* T)

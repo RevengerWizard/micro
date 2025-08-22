@@ -41,14 +41,14 @@ static void gleq_window_pos_callback(GLFWwindow* window, int x, int y)
     event->pos.y = y;
 }
 
-static void gleq_window_size_callback(GLFWwindow* window, int width, int height)
+/*static void gleq_window_size_callback(GLFWwindow* window, int width, int height)
 {
     GLEQevent* event = gleq_new_event();
     event->type = GLEQ_WINDOW_RESIZED;
     event->window = window;
     event->size.width = width;
     event->size.height = height;
-}
+}*/
 
 static void gleq_window_close_callback(GLFWwindow* window)
 {
