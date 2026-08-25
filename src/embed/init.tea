@@ -1,3 +1,16 @@
+import sys, os, time, math
+
+function xpcall(fn, errhandler)
+{
+    const res, msg = pcall(fn)
+    if not res
+    {
+        errhandler(msg)
+        return
+    }
+    return msg
+}
+
 function call(mod, name, ...v)
 {
     if hasattr(mod, name) { return getattr(mod, name)(...v) }
@@ -15,6 +28,28 @@ function merge(dst, src)
     return dst
 }
 
+var done = false
+function onerror(msg)
+{
+    const lines = msg.split('\n')
+    msg = lines[0]
+    const stacktrace = lines[1:].join('\n')
+    if not done
+    {
+        done = true
+        micro.error(msg, stacktrace)
+    }
+    else
+    {
+        print('\n' + msg + '\n' + stacktrace)
+        sys.exit(1)
+    }
+}
+
+// -------------------------------------------------------------------------------
+// Init callbacks
+// -------------------------------------------------------------------------------
+
 const handlers = {
     keydown = function(e) {
         call(micro.keyboard, '_event', e)
@@ -30,7 +65,7 @@ const handlers = {
     },
     mousedown = function(e) {
         call(micro.mouse, '_event', e)
-        call(micro, 'mousedown', e, ['button'])
+        call(micro, 'mousedown', e['button'])
     },
     mouseup = function(e) {
         call(micro.mouse, '_event', e)
@@ -76,13 +111,78 @@ function run()
 
 function micro.run()
 {
-    return run()
+    return xpcall(run, onerror)
 }
 
-import sys, os
+function micro.error(msg, stacktrace)
+{
+    // Create and print error string
+    const tab = "    "
+    const str = msg + "\n\n" + stacktrace
+    print("Error:\n" + str)
+    // Override event handlers
+    handlers.clear()
+    handlers["quit"] = function(e) { quit() }
+    handlers["keydown"] = function(e) { if e['key'] == "escape" { quit() } }
 
+    //  Init error state
+    var font = nil
+    var bigfont = nil
+    var done = false
+    var alpha = 0
+
+    function micro.update(dt)
+    {
+        // The initialisation of the error state's graphics is defered to the
+        // first update() call in case the error occurs in the audio thread in
+        // which case it won't be able to change the openGL state
+        micro.gfx.reset()
+        micro.gfx.setClearColor(38, 40, 51)
+        // Always rasterize at the native 8px base size; scaling is done at
+        // draw time via sx/sy so the bitmap stays sharp at every resolution
+        const scale = math.max(1, math.floor(micro.gfx.screen.getWidth() / 200))
+        font    = micro.Font.fromEmbedded(8)
+        bigfont = micro.Font.fromEmbedded(8)
+        // Init update function
+        function micro.update(dt)
+        {
+            if alpha == 1
+            {
+                done = true
+            }
+            else
+            {
+                alpha = math.min(alpha + dt / 0.5, 1)
+            }
+        }
+    }
+
+    function micro.draw()
+    {
+        const scale = math.max(1, math.floor(micro.gfx.screen.getWidth() / 200))
+        const margin = scale * 8
+        micro.gfx.setAlpha(alpha * 255)
+        micro.gfx.setFont(bigfont)
+        micro.gfx.print("Error", margin, margin, 0, scale * 5, scale * 5)
+        micro.gfx.setFont(font)
+        micro.gfx.print(str, margin, margin + 8 * scale * 5 + scale * 4, 0, scale, scale)
+        // As this screen won't change after its faded in we can sleep here to
+        // avoid having to redraw too often -- this will reduce CPU usage
+        if done
+        {
+            time.sleep(0.1)
+        }
+    }
+}
+
+// -------------------------------------------------------------------------------
+// Init filesystem
+// -------------------------------------------------------------------------------
+
+// Mount project paths
 if sys.argv.len > 1
 {
+    // Try to mount all arguments
     for var i = 1; i < sys.argv.len; i += 1
     {
         micro.fs.mount(sys.argv[i])
@@ -107,6 +207,10 @@ else
     }
 }
 
+// -------------------------------------------------------------------------------
+// Init config
+// -------------------------------------------------------------------------------
+
 var data = {}
 if micro.fs.exists("conf.tea")
 {
@@ -117,7 +221,7 @@ if micro.fs.exists("conf.tea")
     }
 }
 
-const conf = merge({
+const conf = merge(data, {
     title = 'micro',
     width = 200,
     height = 200,
@@ -125,8 +229,14 @@ const conf = merge({
         width = 800,
         height = 800
     },
-    maxfps = 60
-}, data)
+    maxfps = 60,
+    fullscreen = false,
+    resizable = false
+})
+
+// -------------------------------------------------------------------------------
+// Init modules
+// -------------------------------------------------------------------------------
 
 micro.gfx.init(conf['width'], conf['height'])
 micro.gfx.setClearColor(0, 0, 0)
@@ -135,10 +245,84 @@ micro.window.setSize(conf['window']['width'], conf['window']['height'])
 micro.gfx.setMaxFps(conf['maxfps'])
 micro.audio.init()
 
+// -------------------------------------------------------------------------------
+// Init project
+//-------------------------------------------------------------------------------
+
 if micro.fs.exists("main.tea")
 {
     // Load project file
-    import "main"
+    xpcall(function() { import "main" }, onerror)
+}
+else
+{
+    // No project file -- init "no project loaded" screen
+    const w = conf['width']
+    const h = conf['height']
+    const txt = micro.Font.fromEmbedded(8).render("No project loaded")
+    const txtPost = txt.clone()
+    const txtMask = txt.clone()
+    var particles = []
+
+    function micro.load()
+    {
+        micro.gfx.setClearColor(38, 40, 38)
+        for var i = 1; i <= 30; i += 1
+        {
+            const p = {
+                x = 0,
+                y = (i / 30) * 100,
+                z = 0,
+                r = (i / 30) * 2,
+            }
+            particles.add(p)
+        }
+    }
+
+    function micro.update(dt)
+    {
+        const n = micro.timer.getTime()
+        for const p in particles
+        {
+            p['x'] = math.cos(n * p['r']) * 100
+            p['z'] = math.sin(n * p['r'])
+        }
+    }
+
+    function micro.keydown(key)
+    {
+        if key == "escape" { micro.event.quit() }
+    }
+
+    function micro.draw()
+    {
+        // Draw particles
+        //micro.gfx.setBlend("add")
+        var lastx, lasty
+        for const p in particles
+        {
+            const x = (p['x'] * p['z']) + w / 2
+            const y = (p['y'] * p['z']) + w / 2
+            micro.gfx.pixel(x, y, 255, 255, 255, 255)
+            if lastx
+            {
+                micro.gfx.setAlpha(0.3 * 255)
+                micro.gfx.line(x, y, lastx, lasty, 255, 255, 255, 255)
+            }
+            lastx = x
+            lasty = y
+        }
+        // Draw text
+        const n = micro.timer.getTime() * 2
+        const x = (1 + math.sin(n)) * txtMask.getWidth() / 2
+        txtPost.copyPixels(txt)
+        txtMask.clear(255, 255, 255, 127)
+        //micro.imagefx.mask(txtPost, txtMask, "a")
+        const tx = (w - txt.getWidth()) / 2
+        const ty = (h - txt.getHeight()) / 2
+        //micro.gfx.setBlend("alpha")
+        micro.gfx.draw(txtPost, tx, ty)
+    }
 }
 
-call(micro, "load")
+xpcall(function() { call(micro, "load") }, onerror)
