@@ -26,9 +26,9 @@
 #endif
 
 #ifndef SPXE_SHADER_HEADER
-    #ifdef __APPLE__ 
+    #ifdef __APPLE__
         #define SPXE_SHADER_HEADER "#version 330 core\n"
-    #else 
+    #else
         #define SPXE_SHADER_HEADER "#version 300 es\nprecision mediump float;\n"
     #endif
 #endif
@@ -83,7 +83,7 @@ static void spxeFrame(void)
 
     const float w = (float)spxe.winres.width / (float)spxe.scrres.width;
     const float h = (float)spxe.winres.height / (float)spxe.scrres.height;
-    
+
     spxe.ratio.width = (h < w) ? (h / w) : 1.0f;
     spxe.ratio.height = (w < h) ? (w / h) : 1.0f;
 
@@ -91,7 +91,7 @@ static void spxeFrame(void)
         vertices[i] *= spxe.ratio.width;
         vertices[i + 1] *= spxe.ratio.height;
     }
-    
+
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 }
 
@@ -108,8 +108,8 @@ static void spxeWindow(GLFWwindow* window, int width, int height)
 
 /* spxe core */
 
-Px* spxeStart(          
-    const char* title,  const int winwidth, const int winheight, 
+Px* spxeStart(
+    const char* title,  const int winwidth, const int winheight,
     const int scrwidth, const int scrheight)
 {
     Px* pixbuf;
@@ -120,7 +120,7 @@ Px* spxeStart(
     const size_t scrsize = scrwidth * scrheight;
     const unsigned int indices[] = {
         0,  1,  3,
-        1,  2,  3 
+        1,  2,  3
     };
 
     /* init glfw */
@@ -134,7 +134,7 @@ Px* spxeStart(
 #ifdef __APPLE__
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);    
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_COCOA_GRAPHICS_SWITCHING, GLFW_TRUE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -174,10 +174,10 @@ Px* spxeStart(
 #endif
 
     glEnable(GL_MULTISAMPLE);
-    glEnable(GL_BLEND); 
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDepthFunc(GL_LESS);
-    
+
     /* allocate pixel framebuffer */
     pixbuf = (Px*)calloc(scrsize, sizeof(Px));
     if(!pixbuf)
@@ -192,10 +192,10 @@ Px* spxeStart(
     spxe.winres.height = winheight;
     spxe.scrres.width = scrwidth;
     spxe.scrres.height = scrheight;
-    
+
     /* compile and link shaders */
     shader = glCreateProgram();
-    
+
     vshader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vshader, 1, &vertexShader, NULL);
     glCompileShader(vshader);
@@ -207,10 +207,10 @@ Px* spxeStart(
     glAttachShader(shader, vshader);
     glAttachShader(shader, fshader);
     glLinkProgram(shader);
-    
+
     glDeleteShader(vshader);
     glDeleteShader(fshader);
-    
+
     glUseProgram(shader);
 
     /* create vertex buffers */
@@ -220,11 +220,11 @@ Px* spxeStart(
     glGenBuffers(1, &vao);
     glBindBuffer(GL_ARRAY_BUFFER, vao);
     spxeFrame();
-    
+
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
+
     glEnableVertexAttribArray(SPXE_SHADER_LAYOUT_LOCATION);
     glVertexAttribPointer(SPXE_SHADER_LAYOUT_LOCATION, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, vao);
@@ -232,14 +232,14 @@ Px* spxeStart(
     /* create render texture (framebuffer) */
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
+
     glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RGBA, spxe.scrres.width, spxe.scrres.height, 
+        GL_TEXTURE_2D, 0, GL_RGBA, spxe.scrres.width, spxe.scrres.height,
         0, GL_RGBA, GL_UNSIGNED_BYTE, pixbuf
     );
 
@@ -255,7 +255,7 @@ void spxeBackgroundColor(const Px c)
 void spxeRender(const Px* pixbuf)
 {
     glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RGBA, spxe.scrres.width, spxe.scrres.height, 
+        GL_TEXTURE_2D, 0, GL_RGBA, spxe.scrres.width, spxe.scrres.height,
         0, GL_RGBA, GL_UNSIGNED_BYTE, pixbuf
     );
 
@@ -263,7 +263,7 @@ void spxeRender(const Px* pixbuf)
 }
 
 int spxeStep(void)
-{ 
+{
     glfwSwapBuffers(spxe.window);
     glClear(GL_COLOR_BUFFER_BIT);
     return !glfwWindowShouldClose(spxe.window);
@@ -300,7 +300,7 @@ void spxeMousePos(int* x, int* y)
 {
     double dx, dy;
     float width, height, hwidth, hheight;
-    
+
     glfwGetCursorPos(spxe.window, &dx, &dy);
     width = (float)spxe.scrres.width;
     height = (float)spxe.scrres.height;
@@ -329,22 +329,22 @@ void spxeSetFullscreen(int enable)
         // Store current window position and size
         glfwGetWindowPos(spxe.window, &previous_x, &previous_y);
         glfwGetWindowSize(spxe.window, &previous_width, &previous_height);
-        
+
         // Get the primary monitor
         GLFWmonitor* primary = glfwGetPrimaryMonitor();
         if(!primary) return;
-        
+
         // Get the monitor's video mode
         const GLFWvidmode* mode = glfwGetVideoMode(primary);
         if(!mode) return;
-        
+
         // Store the monitor for later use when exiting fullscreen
         previous_monitor = primary;
-        
+
         // Set fullscreen mode
-        glfwSetWindowMonitor(spxe.window, primary, 0, 0, 
-                           mode->width, mode->height, 
-                           mode->refreshRate);   
+        glfwSetWindowMonitor(spxe.window, primary, 0, 0,
+                           mode->width, mode->height,
+                           mode->refreshRate);
     }
     else if(!enable && previous_monitor)
     {
@@ -353,7 +353,7 @@ void spxeSetFullscreen(int enable)
                             previous_x, previous_y,
                             previous_width, previous_height,
                             0);
-                            
+
         // Clear the stored monitor
         previous_monitor = NULL;
     }
