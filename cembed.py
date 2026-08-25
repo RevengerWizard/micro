@@ -1,10 +1,5 @@
 import os, re
 
-def fmt(fmt, opt):
-    for k in opt:
-        fmt = fmt.replace('{' + k + '}', str(opt[k]))
-    return fmt
-
 
 def make_array(data):
     i = [0]
@@ -30,16 +25,11 @@ def process(filename):
 
     with open(filename, 'rb') as f:
         data = f.read()
+        filename = os.path.basename(filename)
+        name = safename(filename)
+        array = make_array(data)
         strings.append(
-            fmt(
-                '/* {filename} */\n'
-                'static const char {name}[] = \n{array};',
-                {
-                    'filename': os.path.basename(filename),
-                    'name': safename(filename),
-                    'array': make_array(data)
-                }
-            )
+            f'/* {filename} */\nstatic const char {name}[] = \n{array};'
         )
 
     return "/* Automatically generated; do not edit */\n\n" + "\n\n".join(strings)
