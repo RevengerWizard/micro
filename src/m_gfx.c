@@ -59,6 +59,11 @@ static void gfx_clear(tea_State* T)
     sr_clear(screen, get_color(T, 0));
 }
 
+static void gfx_reset(tea_State* T)
+{
+    sr_reset(screen);
+}
+
 static void gfx_pixel(tea_State* T)
 {
     int x = tea_check_integer(T, 0);
@@ -133,6 +138,7 @@ static const tea_Reg reg[] = {
     { "setColor", gfx_setColor, 0, 4 },
     { "setMaxFps", gfx_setMaxFps, 0, 4 },
     { "clear", gfx_clear, 0, 4 },
+    { "reset", gfx_reset, 0, 0 },
     { "pixel", gfx_pixel, 2, 4 },
     { "line", gfx_line, 4, 4 },
     { "rect", gfx_rect, 5, 4 },

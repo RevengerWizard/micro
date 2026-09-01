@@ -45,7 +45,7 @@ static void audio_init(tea_State* T)
     {
         tea_error(T, "audio is already inited");
     }
-    
+
     ma_device_config config;
     config = ma_device_config_init(ma_device_type_playback);
     config.playback.format   = ma_format_s16;
@@ -77,4 +77,11 @@ static const tea_Reg reg[] = {
 void micro_open_audio(tea_State* T)
 {
     tea_create_submodule(T, "audio", reg);
+
+    /* Add .master Source field */
+    int32_t ref;
+    source_getMaster(&ref);
+    tea_push_integer(T, (tea_Integer)ref);
+    tea_get_field(T, TEA_REGISTRY_INDEX);
+    tea_set_attr(T, -2, "master");
 }

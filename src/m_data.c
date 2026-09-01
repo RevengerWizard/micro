@@ -83,28 +83,28 @@ static void data_compress(tea_State *T)
 {
     size_t source_len;
     const unsigned char* source = (const unsigned char*)tea_check_lstring(T, 0, &source_len);
-    
+
     // Get initial compression buffer size estimate
     // According to miniz docs, worst case compression can expand data by ~1.1x
     mz_ulong compressed_len = (mz_ulong)(source_len * 1.1) + 12;
     unsigned char* compressed = NULL;
     int status;
-    
+
     compressed = (unsigned char*)malloc(compressed_len);
     if(!compressed)
     {
         tea_error(T, "out of memory");
     }
-    
+
     // Attempt compression
     status = mz_compress(compressed, &compressed_len, source, source_len);
-    
+
     if(status != MZ_OK)
     {
         free(compressed);
         tea_error(T, mz_error(status));
     }
-    
+
     tea_push_lstring(T, (const char*)compressed, compressed_len);
     free(compressed);
 }
@@ -113,12 +113,12 @@ static void data_decompress(tea_State* T)
 {
     size_t compressed_len;
     const unsigned char* compressed = (const unsigned char*)tea_check_lstring(T, 0, &compressed_len);
-    
+
     // Get the decompressed size
     mz_ulong decompressed_len = compressed_len * 2;  // Initial estimate
     unsigned char* decompressed = NULL;
     int status;
-    
+
     do
     {
         // Allocate or reallocate buffer
@@ -129,10 +129,10 @@ static void data_decompress(tea_State* T)
             tea_error(T, "out of memory");
         }
         decompressed = new_buffer;
-        
+
         // Try to decompress
         status = mz_uncompress(decompressed, &decompressed_len, compressed, compressed_len);
-        
+
         if(status == MZ_BUF_ERROR)
         {
             // Buffer too small, double it and try again
@@ -140,13 +140,13 @@ static void data_decompress(tea_State* T)
         }
     }
     while(status == MZ_BUF_ERROR);
-    
+
     if(status != MZ_OK)
     {
         free(decompressed);
         tea_error(T, mz_error(status));
     }
-    
+
     tea_push_lstring(T, (const char*)decompressed, decompressed_len);
     free(decompressed);
 }

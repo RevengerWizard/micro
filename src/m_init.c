@@ -39,10 +39,10 @@ bool micro_open(tea_State* T)
     }
     tea_set_global(T, "micro");
 
-    /* 
-    * Init embedded scripts 
+    /*
+    * Init embedded scripts
     * -- these should be ordered in the array in the order we want them loaded;
-    * init.tea should always be last since it depends on all the other modules 
+    * init.tea should always be last since it depends on all the other modules
     */
 #include "graphics_tea.h"
 #include "keyboard_tea.h"

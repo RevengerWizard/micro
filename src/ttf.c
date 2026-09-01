@@ -108,7 +108,7 @@ static const char* ttf_utf8toCodepoint(const char* p, unsigned* res)
         }
         shift -= 6;
         x |= (*p & 0x3f) << shift;
-    } 
+    }
     while (shift);
     *res = x;
     return p + 1;

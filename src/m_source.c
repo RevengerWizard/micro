@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "tea.h"
 #include "teax.h"
 
 #include "def.h"
@@ -696,6 +697,11 @@ static void source_stop(tea_State* T)
     pushCommand(&c);
 }
 
+static void source_tostring(tea_State* T)
+{
+    tea_push_literal(T, "<Source>");
+}
+
 static const tea_Methods reg[] = {
     { "fromData", "static",  source_fromData, 1, 0 },
     { "fromBlank", "static", source_fromBlank, 1, 0 },
@@ -709,6 +715,7 @@ static const tea_Methods reg[] = {
     { "play", "method", source_play, 1, 1 },
     { "pause", "method", source_pause, 1, 0 },
     { "stop", "method", source_stop, 1, 0 },
+    { "tostring", "method", source_tostring, 1, 0 },
     { NULL }
 };
 

@@ -18,7 +18,7 @@ int teax_ref(tea_State* T, int t)
     if(ref != 0)    /* any free element? */
     {
         tea_push_integer(T, FREELIST_REF);
-        tea_push_integer(T, ref);                
+        tea_push_integer(T, ref);
         if(!tea_get_field(T, t)) { tea_pop(T, 1), tea_push_nil(T); }          /* remove it from list */
         tea_set_field(T, t); /* (t[FREELIST_REF] = t[ref]) */
     }

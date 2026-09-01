@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (c) 2014 rxi
  *
  * This library is free software; you can redistribute it and/or modify it
@@ -28,7 +28,7 @@
 
 #define vec_deinit(v)\
   ( free((v)->data),\
-    vec_init(v) ) 
+    vec_init(v) )
 
 
 #define vec_push(v, val)\
@@ -53,7 +53,7 @@
 #define vec_insert(v, idx, val)\
   ( vec_insert_(vec_unpack_(v), idx) ? -1 :\
     ((v)->data[idx] = (val), (void)(0)), (v)->length++, (void)(0))
-    
+
 
 #define vec_sort(v, fn)\
   qsort((v)->data, (v)->length, sizeof(*(v)->data), fn)
@@ -82,7 +82,7 @@
 #define vec_reserve(v, n)\
   vec_reserve_(vec_unpack_(v), n)
 
- 
+
 #define vec_compact(v)\
   vec_compact_(vec_unpack_(v))
 

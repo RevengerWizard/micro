@@ -30,7 +30,7 @@ static char* dirname(char* str)
 static const char* const opts[] = { "exedir", "appdata", NULL };
 
 static void system_info(tea_State* T)
-{    
+{
     int id = tea_check_option(T, 0, NULL, opts);
     switch(id)
     {

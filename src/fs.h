@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (c) 2015 rxi
  *
  * This library is free software; you can redistribute it and/or modify it
@@ -8,13 +8,13 @@
 #ifndef FS_H
 #define FS_H
 
-typedef struct fs_FileListNode 
+typedef struct fs_FileListNode
 {
     char* name;
     struct fs_FileListNode* next;
 } fs_FileListNode;
 
-enum 
+enum
 {
     FS_ESUCCESS     = 0,
     FS_EFAILURE     = -1,

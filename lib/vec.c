@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (c) 2014 rxi
  *
  * This library is free software; you can redistribute it and/or modify it
@@ -94,7 +94,7 @@ void vec_swapsplice_(char **data, int *length, int *capacity, int memsz,
 
 
 void vec_swap_(char **data, int *length, int *capacity, int memsz,
-               int idx1, int idx2 
+               int idx1, int idx2
 ) {
   unsigned char *a, *b, tmp;
   int count;
