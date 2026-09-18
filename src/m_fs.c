@@ -135,20 +135,20 @@ static void filesystem_makeDirs(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "mount", filesystem_mount, 1, 0 },
-    { "unmount", filesystem_unmount, 1, 0 },
-    { "setWritePath", filesystem_setWritePath, 1, 0 },
-    { "read", filesystem_read, 1, 0 },
-    { "exists", filesystem_exists, 1, 0 },
-    { "write", filesystem_write, 2, 0 },
-    { "delete", filesystem_delete, 1, 0 },
-    { "getSize", filesystem_getSize, 1, 0 },
-    { "getModified", filesystem_getModified, 1, 0 },
-    { "isDir", filesystem_isDir, 1, 0 },
-    { "listDir", filesystem_listDir, 1, 0 },
-    { "append", filesystem_append, 2, 0 },
-    { "makeDirs", filesystem_makeDirs, 1, 0 },
-    { NULL }
+    {"mount", filesystem_mount, 1, 0},
+    {"unmount", filesystem_unmount, 1, 0},
+    {"setWritePath", filesystem_setWritePath, 1, 0},
+    {"read", filesystem_read, 1, 0},
+    {"exists", filesystem_exists, 1, 0},
+    {"write", filesystem_write, 2, 0},
+    {"delete", filesystem_delete, 1, 0},
+    {"getSize", filesystem_getSize, 1, 0},
+    {"getModified", filesystem_getModified, 1, 0},
+    {"isDir", filesystem_isDir, 1, 0},
+    {"listDir", filesystem_listDir, 1, 0},
+    {"append", filesystem_append, 2, 0},
+    {"makeDirs", filesystem_makeDirs, 1, 0},
+    {NULL}
 };
 
 void micro_open_filesystem(tea_State* T)

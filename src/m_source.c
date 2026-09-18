@@ -703,23 +703,23 @@ static void source_tostring(tea_State* T)
 }
 
 static const tea_Methods reg[] = {
-    { "fromData", "static",  source_fromData, 1, 0 },
-    { "fromBlank", "static", source_fromBlank, 1, 0 },
-    { "getLength", "method", source_getLength, 1, 0 },
-    { "getState", "method", source_getState, 1, 0 },
-    { "setDestination", "method", source_setDestination, 1, 1 },
-    { "setGain", "method", source_setGain, 1, 1 },
-    { "setPan", "method", source_setPan, 1, 1 },
-    { "setRate", "method", source_setRate, 1, 1 },
-    { "setLoop", "method", source_setLoop, 1, 1 },
-    { "play", "method", source_play, 1, 1 },
-    { "pause", "method", source_pause, 1, 0 },
-    { "stop", "method", source_stop, 1, 0 },
-    { "tostring", "method", source_tostring, 1, 0 },
-    { NULL }
+    {"fromData", "static",  source_fromData, 1, 0},
+    {"fromBlank", "static", source_fromBlank, 1, 0},
+    {"getLength", "method", source_getLength, 1, 0},
+    {"getState", "method", source_getState, 1, 0},
+    {"setDestination", "method", source_setDestination, 1, 1},
+    {"setGain", "method", source_setGain, 1, 1},
+    {"setPan", "method", source_setPan, 1, 1},
+    {"setRate", "method", source_setRate, 1, 1},
+    {"setLoop", "method", source_setLoop, 1, 1},
+    {"play", "method", source_play, 1, 1},
+    {"pause", "method", source_pause, 1, 0},
+    {"stop", "method", source_stop, 1, 0},
+    {"tostring", "method", source_tostring, 1, 0},
+    {NULL}
 };
 
-void micro_open_source(tea_State* T)
+void micro_open_Source(tea_State* T)
 {
     tea_create_class(T, "Source", reg);
     tea_push_value(T, -1);

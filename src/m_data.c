@@ -65,14 +65,14 @@ static void data_tostring(tea_State* T)
 }
 
 static const tea_Methods reg[] = {
-    { "fromFile", "static", data_fromFile, 1, 0 },
-    { "fromString", "static", data_fromString, 1, 0 },
-    { "getLength", "method", data_getLength, 1, 0 },
-    { "tostring", "method", data_tostring, 1, 0 },
-    { NULL }
+    {"fromFile", "static", data_fromFile, 1, 0},
+    {"fromString", "static", data_fromString, 1, 0},
+    {"getLength", "method", data_getLength, 1, 0},
+    {"tostring", "method", data_tostring, 1, 0},
+    {NULL}
 };
 
-void micro_open_data(tea_State* T)
+void micro_open_Data(tea_State* T)
 {
     tea_create_class(T, "Data", reg);
     tea_push_value(T, -1);
@@ -152,12 +152,12 @@ static void data_decompress(tea_State* T)
 }
 
 static const tea_Reg mod[] = {
-    { "compress", data_compress, 1, 0 },
-    { "decompress", data_decompress, 1, 0 },
-    { NULL }
+    {"compress", data_compress, 1, 0},
+    {"decompress", data_decompress, 1, 0},
+    {NULL}
 };
 
-void micro_open_data_(tea_State* T)
+void micro_open_data(tea_State* T)
 {
     tea_create_submodule(T, "data", mod);
 }

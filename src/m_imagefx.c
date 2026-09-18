@@ -341,14 +341,14 @@ static void fx_blur(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "desaturate", fx_desaturate, 1, 1 },
-    { "palette", fx_palette, 2, 0 },
-    { "dissolve", fx_dissolve, 2, 1 },
-    { "mask", fx_mask, 2, 1 },
-    { "wave", fx_wave, 6, 2 },
-    { "displace", fx_displace, 7, 0 },
-    { "blur", fx_blur, 4, 0 },
-    { NULL }
+    {"desaturate", fx_desaturate, 1, 1},
+    {"palette", fx_palette, 2, 0},
+    {"dissolve", fx_dissolve, 2, 1},
+    {"mask", fx_mask, 2, 1},
+    {"wave", fx_wave, 6, 2},
+    {"displace", fx_displace, 7, 0},
+    {"blur", fx_blur, 4, 0},
+    {NULL}
 };
 
 void micro_open_fx(tea_State* T)

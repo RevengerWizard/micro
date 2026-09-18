@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "micro.h"
-#include "m_init.h"
 #include "m_image.h"
 
 double maxFps = 60;
@@ -132,19 +131,19 @@ static void gfx_draw(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "init", gfx_init, 2, 0 },
-    { "setAlpha", gfx_setAlpha, 0, 1 },
-    { "setBlend", gfx_setBlend, 1, 0 },
-    { "setColor", gfx_setColor, 0, 4 },
-    { "setMaxFps", gfx_setMaxFps, 0, 4 },
-    { "clear", gfx_clear, 0, 4 },
-    { "reset", gfx_reset, 0, 0 },
-    { "pixel", gfx_pixel, 2, 4 },
-    { "line", gfx_line, 4, 4 },
-    { "rect", gfx_rect, 5, 4 },
-    { "circle", gfx_circle, 4, 4 },
-    { "draw", gfx_draw, 3, 6 },
-    { NULL }
+    {"init", gfx_init, 2, 0},
+    {"setAlpha", gfx_setAlpha, 0, 1},
+    {"setBlend", gfx_setBlend, 1, 0},
+    {"setColor", gfx_setColor, 0, 4},
+    {"setMaxFps", gfx_setMaxFps, 0, 4},
+    {"clear", gfx_clear, 0, 4},
+    {"reset", gfx_reset, 0, 0},
+    {"pixel", gfx_pixel, 2, 4},
+    {"line", gfx_line, 4, 4},
+    {"rect", gfx_rect, 5, 4},
+    {"circle", gfx_circle, 4, 4},
+    {"draw", gfx_draw, 3, 6},
+    {NULL}
 };
 
 void micro_open_gfx(tea_State* T)

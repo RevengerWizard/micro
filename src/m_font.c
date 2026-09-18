@@ -116,16 +116,16 @@ static void font_tostring(tea_State* T)
 }
 
 static const tea_Methods reg[] = {
-    { "fromFile", "static", font_fromFile, 1, 1 },
-    { "fromEmbedded", "static", font_fromEmbedded, 0, 1 },
-    { "render", "method", font_render, 2, 0 },
-    { "getWidth", "method", font_getWidth, 2, 0 },
-    { "getHeight", "method", font_getHeight, 1, 0 },
-    { "tostring", "method", font_tostring, 1, 0 },
-    { NULL }
+    {"fromFile", "static", font_fromFile, 1, 1},
+    {"fromEmbedded", "static", font_fromEmbedded, 0, 1},
+    {"render", "method", font_render, 2, 0},
+    {"getWidth", "method", font_getWidth, 2, 0},
+    {"getHeight", "method", font_getHeight, 1, 0},
+    {"tostring", "method", font_tostring, 1, 0},
+    {NULL}
 };
 
-void micro_open_font(tea_State* T)
+void micro_open_Font(tea_State* T)
 {
     tea_create_class(T, "Font", reg);
     tea_push_value(T, -1);

@@ -92,10 +92,10 @@ static void system_setClipboard(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "info", system_info, 1, 0 },
-    { "getClipboard", system_getClipboard, 0, 0 },
-    { "setClipboard", system_setClipboard, 1, 0 },
-    { NULL }
+    {"info", system_info, 1, 0},
+    {"getClipboard", system_getClipboard, 0, 0},
+    {"setClipboard", system_setClipboard, 1, 0},
+    {NULL}
 };
 
 void micro_open_system(tea_State* T)

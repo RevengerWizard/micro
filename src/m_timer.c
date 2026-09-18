@@ -31,9 +31,9 @@ static void timer_getTime(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "getNow", timer_getNow, 0, 0 },
-    { "getTime", timer_getTime, 0, 0 },
-    { NULL }
+    {"getNow", timer_getNow, 0, 0},
+    {"getTime", timer_getTime, 0, 0},
+    {NULL}
 };
 
 void micro_open_timer(tea_State* T)

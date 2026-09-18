@@ -28,10 +28,10 @@ static void mouse_setPosition(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "isVisible", mouse_isVisible, 0, 0 },
-    { "setVisible", mouse_setVisible, 1, 0 },
-    { "setPosition", mouse_setPosition, 2, 0 },
-    { NULL }
+    {"isVisible", mouse_isVisible, 0, 0},
+    {"setVisible", mouse_setVisible, 1, 0},
+    {"setPosition", mouse_setPosition, 2, 0},
+    {NULL }
 };
 
 void micro_open_mouse(tea_State* T)

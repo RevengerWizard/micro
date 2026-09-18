@@ -70,8 +70,8 @@ static void audio_init(tea_State* T)
 }
 
 static const tea_Reg reg[] = {
-    { "init", audio_init, 0, 2 },
-    { NULL }
+    {"init", audio_init, 0, 2},
+    {NULL}
 };
 
 void micro_open_audio(tea_State* T)

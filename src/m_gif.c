@@ -99,13 +99,13 @@ static void gif_close(tea_State* T)
 }
 
 static const tea_Methods reg[] = {
-    { "new", "static", gif_new, 3, 1 },
-    { "update", "method", gif_update, 3, 0 },
-    { "close", "method", gif_close, 0, 0 },
-    { NULL }
+    {"new", "static", gif_new, 3, 1},
+    {"update", "method", gif_update, 3, 0},
+    {"close", "method", gif_close, 0, 0},
+    {NULL}
 };
 
-void micro_open_gif(tea_State* T)
+void micro_open_Gif(tea_State* T)
 {
     tea_create_class(T, "Gif", reg);
     tea_push_value(T, -1);

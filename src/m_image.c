@@ -227,24 +227,24 @@ static void image_tostring(tea_State* T)
 }
 
 static const tea_Methods reg[] = {
-    { "fromFile", "static", image_fromFile, 1, 0 },
-    { "fromString", "static", image_fromString, 1, 0 },
-    { "fromBlank", "static", image_fromBlank, 2, 0 },
-    { "clone", "method", image_clone, 1, 0 },
-    { "reset", "method", image_reset, 1, 0 },
-    { "clear", "method", image_clear, 1, 4 },
-    { "setPixel", "method", image_setPixel, 3, 4 },
-    { "getPixel", "method", image_getPixel, 3, 0 },
-    { "copyPixels", "method", image_copyPixels, 2, 5 },
-    { "noise", "method", image_noise, 1, 4 },
-    { "floodFill", "method", image_floodFill, 3, 4 },
-    { "getWidth", "method", image_getWidth, 1, 0 },
-    { "getHeight", "method", image_getHeight, 1, 0 },
-    { "tostring", "method", image_tostring, 1, 0 },
-    { NULL }
+    {"fromFile", "static", image_fromFile, 1, 0},
+    {"fromString", "static", image_fromString, 1, 0},
+    {"fromBlank", "static", image_fromBlank, 2, 0},
+    {"clone", "method", image_clone, 1, 0},
+    {"reset", "method", image_reset, 1, 0},
+    {"clear", "method", image_clear, 1, 4},
+    {"setPixel", "method", image_setPixel, 3, 4},
+    {"getPixel", "method", image_getPixel, 3, 0},
+    {"copyPixels", "method", image_copyPixels, 2, 5},
+    {"noise", "method", image_noise, 1, 4},
+    {"floodFill", "method", image_floodFill, 3, 4},
+    {"getWidth", "method", image_getWidth, 1, 0},
+    {"getHeight", "method", image_getHeight, 1, 0},
+    {"tostring", "method", image_tostring, 1, 0},
+    {NULL}
 };
 
-void micro_open_image(tea_State* T)
+void micro_open_Image(tea_State* T)
 {
     tea_create_class(T, "Image", reg);
     tea_push_value(T, -1);

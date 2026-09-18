@@ -9,14 +9,100 @@
 #include "spxe.h"
 
 #include "micro.h"
-#include "m_init.h"
+
+#ifdef  _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 sr_Buffer* screen = NULL;
 Px* pixbuf = NULL;
 ma_device device;
 
+void micro_open_keyboard(tea_State* T)
+{
+    tea_create_submodule(T, "keyboard", NULL);
+}
+
+static const struct { char* name; void (*fn)(tea_State*); } mods[] = {
+    /* Objects */
+    {"Source", micro_open_Source},
+    {"Data", micro_open_Data},
+    {"Gif", micro_open_Gif},
+    {"Font", micro_open_Font},
+    {"Image", micro_open_Image},
+    /* Modules */
+    {"audio", micro_open_audio },
+    {"data", micro_open_data},
+    {"keyboard", micro_open_keyboard},
+    {"mouse", micro_open_mouse},
+    {"event", micro_open_event},
+    {"system", micro_open_system},
+    {"timer", micro_open_timer},
+    {"window", micro_open_window},
+    {"fs", micro_open_filesystem},
+    {"gfx", micro_open_gfx},
+    {"imagefx", micro_open_fx},
+    {NULL, NULL}
+};
+
+bool micro_open(tea_State* T)
+{
+    tea_new_module(T, "micro");
+    for(int i = 0; mods[i].name; i++)
+    {
+        mods[i].fn(T);
+        tea_set_attr(T, -2, mods[i].name);
+    }
+    tea_set_global(T, "micro");
+
+    /*
+    * Init embedded scripts
+    * -- these should be ordered in the array in the order we want them loaded;
+    * init.tea should always be last since it depends on all the other modules
+    */
+#include "graphics_tea.h"
+#include "keyboard_tea.h"
+#include "mouse_tea.h"
+#include "timer_tea.h"
+#include "init_tea.h"
+    struct
+    {
+        const char* name;
+        const char* data;
+        int size;
+    } items[] = {
+        { "graphics.tea", graphics_tea, sizeof(graphics_tea) },
+        { "keyboard.tea", keyboard_tea, sizeof(keyboard_tea) },
+        { "mouse.tea", mouse_tea, sizeof(mouse_tea) },
+        { "timer.tea", timer_tea, sizeof(timer_tea) },
+        { "init.tea", init_tea, sizeof(init_tea) },
+        { NULL, NULL, 0 }
+    };
+
+    int i;
+    for(i = 0; items[i].name; i++)
+    {
+        int status = tea_load_buffer(T, items[i].data, items[i].size, items[i].name);
+        if(status || tea_pcall(T, 0) != TEA_OK)
+        {
+            const char* str = tea_to_string(T, -1);
+            fputs(str, stderr);
+            fputc('\n', stderr);
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char** argv)
 {
+#ifdef _WIN32
+    /* On Windows, you never know... */
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+#endif
+
     tea_State* T = tea_open();
     tea_set_argv(T, argc, argv, 0);
 
