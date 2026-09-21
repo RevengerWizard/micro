@@ -5,3 +5,5 @@
 *.o
 *.clangd
 src/embed/*.h
+*.a
+*.wasm

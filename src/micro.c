@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <windows.h>
 
 #include <tea.h>
 
@@ -17,7 +16,17 @@
 
 sr_Buffer* screen = NULL;
 Px* pixbuf = NULL;
+
+#ifndef MICRO_NO_AUDIO
 ma_device device;
+#endif
+
+static void micro_sleep(double wait)
+{
+#ifdef _WIN32
+    Sleep(wait * 1000);
+#endif
+}
 
 void micro_open_keyboard(tea_State* T)
 {
@@ -46,8 +55,12 @@ static const struct { char* name; void (*fn)(tea_State*); } mods[] = {
     {NULL, NULL}
 };
 
-bool micro_open(tea_State* T)
+tea_State* micro_open(int argc, char** argv)
 {
+    tea_State* T = tea_open();
+    if(!T) return NULL;
+    tea_set_argv(T, argc, argv, 0);
+
     tea_new_module(T, "micro");
     for(int i = 0; mods[i].name; i++)
     {
@@ -72,12 +85,12 @@ bool micro_open(tea_State* T)
         const char* data;
         int size;
     } items[] = {
-        { "graphics.tea", graphics_tea, sizeof(graphics_tea) },
-        { "keyboard.tea", keyboard_tea, sizeof(keyboard_tea) },
-        { "mouse.tea", mouse_tea, sizeof(mouse_tea) },
-        { "timer.tea", timer_tea, sizeof(timer_tea) },
-        { "init.tea", init_tea, sizeof(init_tea) },
-        { NULL, NULL, 0 }
+        {"=graphics.tea", graphics_tea, sizeof(graphics_tea)},
+        {"=keyboard.tea", keyboard_tea, sizeof(keyboard_tea)},
+        {"=mouse.tea", mouse_tea, sizeof(mouse_tea)},
+        {"=timer.tea", timer_tea, sizeof(timer_tea)},
+        {"=init.tea", init_tea, sizeof(init_tea)},
+        {NULL, NULL, 0}
     };
 
     int i;
@@ -89,10 +102,42 @@ bool micro_open(tea_State* T)
             const char* str = tea_to_string(T, -1);
             fputs(str, stderr);
             fputc('\n', stderr);
-            return false;
+            return NULL;
         }
     }
-    return true;
+    return T;
+}
+
+void micro_run(tea_State* T)
+{
+    if(tea_get_global(T, "micro"))
+    {
+        tea_get_attr(T, -1, "run");
+        if(tea_pcall(T, 0) != TEA_OK)
+        {
+            const char* str = tea_to_string(T, -1);
+            fputs(str, stderr);
+            fputc('\n', stderr);
+            return;
+        }
+        if(tea_is_number(T, -1) && tea_get_number(T, -1) == 1)
+            return;
+        tea_pop(T, 1);
+    }
+    spxeRender(pixbuf);
+}
+
+bool micro_close(tea_State* T)
+{
+#ifndef MICRO_NO_AUDIO
+    ma_device_uninit(&device);
+#endif
+
+    tea_close(T);
+    bool res = spxeEnd(pixbuf);
+    screen = NULL;
+    pixbuf = NULL;
+    return res;
 }
 
 int main(int argc, char** argv)
@@ -103,31 +148,14 @@ int main(int argc, char** argv)
     SetConsoleCP(CP_UTF8);
 #endif
 
-    tea_State* T = tea_open();
-    tea_set_argv(T, argc, argv, 0);
-
-    if(!micro_open(T))
-        return EXIT_FAILURE;
+    tea_State* T = micro_open(argc, argv);
+    if(!T) return EXIT_FAILURE;
 
     /* Do main loop */
     double last = 0;
     while(spxeStep())
     {
-        if(tea_get_global(T, "micro"))
-        {
-            tea_get_attr(T, -1, "run");
-            if(tea_pcall(T, 0) != TEA_OK)
-            {
-                const char* str = tea_to_string(T, -1);
-                fputs(str, stderr);
-                fputc('\n', stderr);
-                break;
-            }
-            if(tea_is_number(T, -1) && tea_get_number(T, -1) == 1)
-                break;
-            tea_pop(T, 1);
-        }
-        spxeRender(pixbuf);
+        micro_run(T);
         /* Wait for next frame */
         double step = 1.0 / maxFps;
         double now = glfwGetTime();
@@ -135,7 +163,7 @@ int main(int argc, char** argv)
         last += step;
         if(wait > 0)
         {
-            Sleep(wait * 1000);
+            micro_sleep(wait);
         }
         else
         {
@@ -143,11 +171,5 @@ int main(int argc, char** argv)
         }
     }
 
-    screen = NULL;
-    pixbuf = NULL;
-    ma_device_uninit(&device);
-
-    tea_close(T);
-
-    return spxeEnd(pixbuf);
+    return micro_close(T);
 }

@@ -8,6 +8,8 @@
 #ifndef FS_H
 #define FS_H
 
+#include <stddef.h>
+
 typedef struct fs_FileListNode
 {
     char* name;

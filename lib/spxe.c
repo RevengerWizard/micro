@@ -1,14 +1,13 @@
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "spxe.h"
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__wasm__) && !defined(__wasi__)
     #include <GL/glew.h>
     #define GLFW_MOD_CAPS_LOCK 0x0010
-#else
+#elif defined(__APPLE__) || defined(__wasm__) || defined(__wasi__)
     #define GL_SILENCE_DEPRECATION
     #define GLFW_INCLUDE_GLCOREARB
 #endif
@@ -164,7 +163,7 @@ Px* spxeStart(
     gleqTrackWindow(window);
 
     /* OpenGL context and settings */
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__wasm__) && !defined(__wasi__)
     glewExperimental = GL_TRUE;
     if(glewInit() != GLEW_OK)
     {

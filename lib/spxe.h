@@ -1,6 +1,8 @@
 #ifndef SIMPLE_PIXEL_ENGINE_H
 #define SIMPLE_PIXEL_ENGINE_H
 
+#include <stdint.h>
+
 #ifndef PX_TYPE_DEFINED
 #define PX_TYPE_DEFINED
 

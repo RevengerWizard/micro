@@ -1,7 +1,10 @@
 #ifndef _MICRO_H
 #define _MICRO_H
 
+#ifndef MICRO_NO_AUDIO
 #include "miniaudio.h"
+#endif
+
 #include "sera.h"
 #include "spxe.h"
 
@@ -9,8 +12,11 @@
 
 extern sr_Buffer* screen;
 extern Px* pixbuf;
-extern ma_device device;
 extern double maxFps;
+
+#ifndef MICRO_NO_AUDIO
+extern ma_device device;
+#endif
 
 void micro_open_Source(tea_State* T);
 void micro_open_Data(tea_State* T);
@@ -30,6 +36,8 @@ void micro_open_filesystem(tea_State* T);
 void micro_open_gfx(tea_State* T);
 void micro_open_fx(tea_State* T);
 
-bool micro_open(tea_State* T);
+tea_State* micro_open(int argc, char** argv);
+void micro_run(tea_State* T);
+bool micro_close(tea_State* T);
 
 #endif

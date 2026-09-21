@@ -8,6 +8,9 @@
 
 #include <GLFW/glfw3.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <tea.h>
 
 #include "spxe.h"

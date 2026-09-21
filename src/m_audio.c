@@ -2,8 +2,10 @@
 
 #include "micro.h"
 
+#ifndef MICRO_NO_AUDIO
 #define MINIAUDIO_IMPLEMENTATION
 #include <miniaudio.h>
+#endif
 
 #include <tea.h>
 
@@ -13,6 +15,7 @@
 static bool inited = false;
 static double samplerate = 0;
 
+#ifndef MICRO_NO_AUDIO
 static void audio_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 {
     tea_State* T = (tea_State*)pDevice->pUserData;
@@ -35,6 +38,7 @@ static void audio_callback(ma_device* pDevice, void* pOutput, const void* pInput
 
     UNUSED(pInput);
 }
+#endif
 
 static void audio_init(tea_State* T)
 {
@@ -46,6 +50,7 @@ static void audio_init(tea_State* T)
         tea_error(T, "audio is already inited");
     }
 
+#ifndef MICRO_NO_AUDIO
     ma_device_config config;
     config = ma_device_config_init(ma_device_type_playback);
     config.playback.format   = ma_format_s16;
@@ -59,14 +64,15 @@ static void audio_init(tea_State* T)
         tea_error(T, "could not init audio");
     }
 
-    samplerate = rate;
-    inited = true;
-    source_setSamplerate(samplerate);
-
     if(ma_device_start(&device) != MA_SUCCESS)
     {
         tea_error(T, "could not start audio");
     }
+#endif
+
+    samplerate = rate;
+    inited = true;
+    source_setSamplerate(samplerate);
 }
 
 static const tea_Reg reg[] = {
